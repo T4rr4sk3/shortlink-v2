@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: "/shortlink"
+  basePath: "/shortlink",
+  images: {
+    remotePatterns: [
+      { hostname: "localhost" }
+    ]
+  }
 };
 
 export default nextConfig;

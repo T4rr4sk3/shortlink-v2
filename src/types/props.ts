@@ -7,3 +7,7 @@ export interface WithClassName {
 export interface WrapperProps extends WithClassName, PropsWithChildren {
 
 }
+
+export interface WithParams<T> {
+  params: T
+}
