@@ -18,4 +18,15 @@ export function dataIsApiCallError(data: unknown): data is ApiCallError {
   )
 }
 
+export function getApiCallErrorMessage(err: ApiCallError, name?: string) {
+  const message = err.messages ?
+    err.messages.map(getApiErrorMessage).join(", ")
+    : err.message // only the message
+  return `${name || err.name}: ${message} (${err.status})`
+}
+
+export function getApiErrorMessage(err: { field: string, message: string }) {
+  return `${err.field}{${err.message}}`
+}
+
 export const apiUrl = process.env.NEXT_PUBLIC_API_DOMAIN || "http://localhost:3334"

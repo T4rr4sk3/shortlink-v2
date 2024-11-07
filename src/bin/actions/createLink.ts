@@ -1,6 +1,6 @@
 "use server"
 
-import type { GetLinkReturn } from "@app/types/api/link"
+import type { LinkCreatedReturn } from "@app/types/api/link"
 import type { ApiCallError } from "@app/types/api"
 import { callApi } from "../http/callApi"
 import { revalidateTag } from "next/cache"
@@ -8,9 +8,32 @@ import { revalidateTag } from "next/cache"
 export async function doCreateLink(formData: FormData) {
   const name = formData.get("name")?.toString()
   const url = formData.get("url")?.toString()
-  const response = await callApi("/link", { method: "POST", data: { name, url } })
+  const expiresIn = formData.get("expiresAt")?.toString()
+  const response = await callApi("/link", { method: "POST", data: { name, url, expiresIn } })
   const data = await response.json()
   if(!response.ok) return data as ApiCallError
   revalidateTag("links")
-  return data as GetLinkReturn
+  revalidateTag("link-tags")
+  revalidateTag("link-groups")
+  return data as LinkCreatedReturn
+}
+
+export async function doCreateLinkFake(formData: FormData, fakeError?: boolean) {
+  if (fakeError) return {
+    name: "FakeRequestError",
+    message: "Fake error",
+    status: 400,
+  } as ApiCallError
+  const name = formData.get("name")?.toString()
+  const url = formData.get("url")?.toString()
+  const expiresAt = formData.get("expiresAt")?.toString() || null
+  const date = new Date().toISOString()
+  return {
+    id: 1,
+    code: "Dj0aQ",
+    createdAt: date.replace("Z", "+00:00"),
+    expiresAt,
+    name,
+    url,
+  } as LinkCreatedReturn
 }
