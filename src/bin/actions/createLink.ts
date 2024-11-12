@@ -9,7 +9,9 @@ export async function doCreateLink(formData: FormData) {
   const name = formData.get("name")?.toString()
   const url = formData.get("url")?.toString()
   const expiresIn = formData.get("expiresAt")?.toString()
-  const response = await callApi("/link", { method: "POST", data: { name, url, expiresIn } })
+  const tags = getTags(formData)
+  //const groupId = formData.get("groupId")?.toString()
+  const response = await callApi("/link", { method: "POST", data: { name, url, expiresIn, tags } })
   const data = await response.json()
   if(!response.ok) return data as ApiCallError
   revalidateTag("links")
@@ -28,6 +30,7 @@ export async function doCreateLinkFake(formData: FormData, fakeError?: boolean) 
   const url = formData.get("url")?.toString()
   const expiresAt = formData.get("expiresAt")?.toString() || null
   const date = new Date().toISOString()
+  console.log("Tags: ", getTags(formData))
   return {
     id: 1,
     code: "Dj0aQ",
@@ -36,4 +39,8 @@ export async function doCreateLinkFake(formData: FormData, fakeError?: boolean) 
     name,
     url,
   } as LinkCreatedReturn
+}
+
+function getTags(formData: FormData) {
+  return formData.get("tags")?.toString()?.split(",").map((tid) => parseInt(tid))
 }

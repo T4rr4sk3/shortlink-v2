@@ -3,21 +3,20 @@ import { TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../ui/
 import { getLinesLabel, getPageOptionsByCurrentPage } from "@app/lib/pagination"
 import type { PaginatorProps, PaginatorSide } from "@app/types/props"
 import { useReactTableContext } from "@app/hooks/use-react-table"
-import type { PropsWithChildren } from "react"
+import type { ChangeEventHandler, PropsWithChildren } from "react"
 import { cn } from "@app/lib/utils"
 
 export default function ReactTablePaginator({ side = "bottom", showLines = true, linesLabel = "Total de linhas: " }: PaginatorProps) {
   const { getState, getPageOptions, getRowCount, setPageIndex } = useReactTableContext()
   const currentPage = getState().pagination.pageIndex
-  const rowsPerPage = getState().pagination.pageSize
-  const currentPageOptions = getPageOptionsByCurrentPage(currentPage, getPageOptions())
   const lines = getLinesLabel(getRowCount(), linesLabel)
   const onPageClick = (page: number) => () => setPageIndex(page)
+  const currentPageOptions = getPageOptionsByCurrentPage(currentPage, getPageOptions())
 
   return(
     <ReactTablePaginatorWrapper side={side}>
       {showLines &&
-        <ReactTablePaginatorLinesLabel label={lines} rowsPerPage={rowsPerPage} />
+        <ReactTablePaginatorLinesLabel label={lines} />
       }
 
       <Pagination className="w-full flex justify-center">
@@ -76,15 +75,35 @@ function ReactTablePaginatorPrevPageButton() {
   )
 }
 
-function ReactTablePaginatorLinesLabel({ label, rowsPerPage }: { label: string, rowsPerPage: number }) {
+function ReactTablePaginatorLinesLabel({ label }: { label: string }) {
   return(
     <div className="text-center truncate font-semibold text-sm" title={label} aria-label={label}>
       <p>
-        {/* Mostrando <TanStackPaginatorPageSizeSelect className="border-gray-400" /> linhas */}
-        Mostrando {rowsPerPage} por página - {label}
+        Mostrando <ReactTablePaginatorPageSizeSelect /> por página - {label}
         {/* por página - {lines} <TanStackRowSelectionSelectedQuantity /> */}
       </p>
     </div>
+  )
+}
+
+function ReactTablePaginatorPageSizeSelect() {
+  const { getState, setPageSize } = useReactTableContext()
+  const currentSize = getState().pagination.pageSize
+  const handleChange: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const value = parseInt(e.target.value)
+    if(isNaN(value)) return
+    setPageSize(value)
+  }
+  const options = [5, 10, 15, 20]
+  if(!options.includes(currentSize)) options.unshift(currentSize)
+  return(
+    <select className="w-fit pl-2 bg-common-branco border border-gray-400 rounded inline" value={currentSize} onChange={handleChange}>
+      {options.map((value) => (
+        <option key={value} value={value}>
+          {value}
+        </option>
+      ))}
+    </select>
   )
 }
 

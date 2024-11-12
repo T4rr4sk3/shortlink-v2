@@ -23,7 +23,7 @@ export async function dooUpdateTagFake(formData: FormData, fakeError?: boolean) 
     message: "Fake error",
     status: 400,
   } as ApiCallError
-  const tagId = formData.get("tagId")?.toString() || ''
+  const tagId = formData.get("tagId")?.toString() || ""
   const name = formData.get("name")?.toString()
   const color = formData.get("color")?.toString()
   const date = new Date().toISOString()

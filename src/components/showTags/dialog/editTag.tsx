@@ -3,7 +3,7 @@ import EditIcon from "@app/components/icons/edit";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@app/components/ui/dialog";
 import UpdateTagForm from "@app/components/updateTag/form";
 import { useActions } from "@app/hooks/use-actions";
-import { GetTagsReturn } from "@app/types/api/tag";
+import type { GetTagsReturn } from "@app/types/api/tag";
 import { useState } from "react";
 
 export default function ShowTagsEditTagDialog({ tag }: { tag: Pick<GetTagsReturn, "id" | "name" | "color">}) {
