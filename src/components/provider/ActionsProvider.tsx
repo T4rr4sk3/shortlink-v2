@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ActionsContext } from "@app/context/actionsContext";
 import type { PropsWithChildren} from "react";
+import { ActionCallError } from "@app/bin/exceptions/actionCallError";
 
 interface ActionsProviderProps extends PropsWithChildren {
   initialActions?: {
@@ -23,7 +24,7 @@ export default function ActionsProvider({ initialActions, children }: ActionsPro
 
   const callAction = useCallback((name: string, ...args: unknown[]) => {
     const existingFunction = functionMap.get(name)
-    if(!existingFunction) throw new Error("Action not founded. It was registered?")
+    if(!existingFunction) throw new ActionCallError(name)
     return existingFunction(...args)
   }, [functionMap])
 

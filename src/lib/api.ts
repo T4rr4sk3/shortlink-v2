@@ -4,7 +4,7 @@ export function toFormData(data: object) {
   const formData = new FormData()
   Object.entries(data).forEach(([key, value]) => {
     const isArray = Array.isArray(value)
-    formData.append(key, isArray ? value.join() : value)
+    formData.append(key, isArray ? value.join() : typeof value === "boolean" ? value : value || null)
   })
   return formData
 }

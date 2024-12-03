@@ -1,18 +1,21 @@
 "use client"
 
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api"
 import { useLoading } from "@app/hooks/use-loading"
 import { toast } from "@app/hooks/use-toast"
-import { MainButton } from "../common/mainButton"
-import { useSearchParams } from "next/navigation"
 import LoadingIcon from "../icons/loading"
-import ActionsProvider from "../provider/ActionsProvider"
+import { MainButton } from "../common/mainButton"
 import { getLinkGroupsClient } from "@app/bin/endpoints/linkGroup"
+import ActionsProvider from "../provider/ActionsProvider"
+import type { GetGroupsReturn } from "@app/types/api/group"
+import CreateGroupModal from "../createGroup/modal"
+import ShowGroupsTable from "./table"
 
 export default function ShowGroupsComponent() {
   const { onLoading, offLoading, loading } = useLoading()
-  const [groups, setGroups] = useState<unknown[]>([])
+  const [groups, setGroups] = useState<GetGroupsReturn[]>([])
   const searchParams = useSearchParams()
 
   const searchGroups = useCallback(async () => {
@@ -42,12 +45,11 @@ export default function ShowGroupsComponent() {
 
       <div className="text-right">
         {loading && <LoadingIcon className="size-8 inline mr-4" />}
-        {/* <CreateTagModal onDone={searchTags} /> */}
+        <CreateGroupModal onDone={searchGroups} />
       </div>
 
       <ActionsProvider initialActions={actions}>
-        {JSON.stringify(groups)}
-        {/* <ShowTagsTable tags={tags} /> */}
+        <ShowGroupsTable groups={groups} />
       </ActionsProvider>
     </div>
   )

@@ -63,7 +63,7 @@ export default function CreateLinkFormTagInput({ onIncludeTag, disabled }: TagIn
             {currentTag ? currentTag.name : "Atribuir tag..."}
           </Button>
         </PopoverTrigger>
-        <PopoverContent>
+        <PopoverContent className="p-0">
           <Command>
             <CommandInput disabled={disabled} placeholder="Nome da tag..." />
             <CommandList>

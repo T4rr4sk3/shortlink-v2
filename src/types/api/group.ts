@@ -1,14 +1,23 @@
-// export interface CreateGroupReturn {
-//   id: number,
-//   name: string,
-//   createdAt: string,
-// }
+export interface CreateGroupReturn {
+  id: number,
+  name: string,
+  createdAt: string,
+  parentGroupId: number | null,
+  parentGroup: SimpleGroup | null
+}
+
+export interface SimpleGroup {
+  id: number,
+  name: string,
+  createdAt: string,
+  parentGroupId: number | null,
+}
 
 export interface GetGroupsReturn {
   id: number,
   name: string,
-  parentGroupId: number | null,
-  parentGroup: GetGroupsReturn | null,
   createdAt: string,
+  parentGroupId: number | null,
+  parentGroup: SimpleGroup | null,
   links: number,
 }

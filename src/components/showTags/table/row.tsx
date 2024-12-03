@@ -1,6 +1,7 @@
 import { TableCell, TableRow } from "@app/components/ui/table";
 import type { GetTagsReturn } from "@app/types/api/tag";
 
+/** @deprecated */
 export default function ShowTagsTableRow({ tag }: { tag: GetTagsReturn }) {
   const formattedDate = new Date(tag.createdAt)
 
