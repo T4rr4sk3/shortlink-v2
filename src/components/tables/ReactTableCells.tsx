@@ -15,7 +15,7 @@ export function ReactTableCellBase<T = unknown, TData = unknown>(
 ) {
   const normalText = boolValue ?
     (getValue() ? boolValue.truthy : boolValue.falsy)
-  : value || getValue() as string
+  : value || getValue() as string | undefined
 
   const decimalText = !decimalDigits ?
     undefined // if don't have decimal digits
@@ -26,6 +26,25 @@ export function ReactTableCellBase<T = unknown, TData = unknown>(
   return(
     <div title={visibleValue} className={cn(inCenter && "text-center", isID && "text-right font-medium", className)}>
       {visibleValue}
+    </div>
+  )
+}
+
+interface CellDateProps<T = unknown, TData = unknown> {
+  className?: string,
+  context: CellContext<T, TData>,
+  dateType?: "datetime" | "date" | "time"
+}
+export function ReactTableCellDate<T = unknown, TData = unknown>({ context, dateType = "datetime", className = "text-right" }: CellDateProps<T, TData>) {
+  const formattedDate = new Date(context.getValue() as string)
+  return(
+    <div className={className}>
+      {dateType === "datetime" ?
+        formattedDate.toLocaleString()
+        : dateType === "date" ?
+          formattedDate.toLocaleDateString()
+          : formattedDate.toLocaleTimeString()
+      }
     </div>
   )
 }

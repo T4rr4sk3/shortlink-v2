@@ -1,22 +1,23 @@
 "use server"
 
+import { tagGetLinkGroupTree } from "../endpoints/linkGroupTree"
 import type { LinkCreatedReturn } from "@app/types/api/link"
+import { tagGetLinkGroups } from "../endpoints/linkGroup"
+import { tagGetLinkTags } from "../endpoints/linkTag"
 import type { ApiCallError } from "@app/types/api"
+import { revalidateTags } from "@app/lib/next"
 import { callApi } from "../http/callApi"
-import { revalidateTag } from "next/cache"
 
 export async function doCreateLink(formData: FormData) {
   const name = formData.get("name")?.toString()
   const url = formData.get("url")?.toString()
   const expiresIn = formData.get("expiresAt")?.toString()
   const tags = getTags(formData)
-  //const groupId = formData.get("groupId")?.toString()
-  const response = await callApi("/link", { method: "POST", data: { name, url, expiresIn, tags } })
+  const groupId = getGroupId(formData)
+  const response = await callApi("/link", { method: "POST", data: { name, url, expiresIn, tags, groupId } })
   const data = await response.json()
   if(!response.ok) return data as ApiCallError
-  revalidateTag("links")
-  revalidateTag("link-tags")
-  revalidateTag("link-groups")
+  revalidateTags(tagGetLinkGroups, tagGetLinkTags, tagGetLinkGroupTree)
   return data as LinkCreatedReturn
 }
 
@@ -29,18 +30,30 @@ export async function doCreateLinkFake(formData: FormData, fakeError?: boolean) 
   const name = formData.get("name")?.toString()
   const url = formData.get("url")?.toString()
   const expiresAt = formData.get("expiresAt")?.toString() || null
-  const date = new Date().toISOString()
+  const createdAt = new Date().toISOString().replace("Z", "+00:00")
+  const groupId = getGroupId(formData)
   console.log("Tags: ", getTags(formData))
   return {
     id: 1,
     code: "Dj0aQ",
-    createdAt: date.replace("Z", "+00:00"),
+    createdAt,
     expiresAt,
     name,
     url,
+    linkGroup: groupId ? {
+      id: groupId,
+      name: "fake",
+      createdAt,
+      parentGroupId: null
+    } : null,
   } as LinkCreatedReturn
 }
 
 function getTags(formData: FormData) {
-  return formData.get("tags")?.toString()?.split(",").map((tid) => parseInt(tid))
+  return formData.get("tags")?.toString()?.split(",").map((tagId) => parseInt(tagId))
+}
+
+function getGroupId(formData: FormData) {
+  const groupId = formData.get("groupId")?.toString()
+  if(groupId) return parseInt(groupId)
 }

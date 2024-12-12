@@ -36,3 +36,14 @@ interface LinkTag {
   color: string,
   createdAt: string,
 }
+
+export interface SimpleLink {
+  id: number,
+  url: string,
+  name: string,
+  code: string,
+  visits: number,
+  createdAt: string,
+  expiresAt: string | null,
+  groupId: number | null
+}

@@ -9,7 +9,7 @@ const LUMINOSITY_RED = 0.299
 const LUMINOSITY_GREEN = 0.587
 const LUMINOSITY_BLUE = 0.114
 const MAX_RGB_VALUE = 255
-export function getLuminance(hexcolor: string) {
+export function getLuminosity(hexcolor: string) {
   const matches = hexcolor.length === 3 ?
     hexcolor.match(/[0-F]/gi)?.map((hex) => hex + hex) // '#000'
     : hexcolor.match(/[0-F]{2}/gi) // '#0000000'
@@ -19,4 +19,12 @@ export function getLuminance(hexcolor: string) {
   const GREEN = LUMINOSITY_GREEN * RGB[1]
   const BLUE = LUMINOSITY_BLUE * RGB[2]
   return (RED + GREEN + BLUE) / MAX_RGB_VALUE
+}
+
+export function getTextColorByLuminosity(luminosity: number) {
+  return luminosity > 0.6 ? "#000" : "#FFF"
+}
+
+export function getTextColorByHexcolorLuminosity(hexcolor: string) {
+  return getTextColorByLuminosity(getLuminosity(hexcolor))
 }

@@ -27,7 +27,7 @@ export default function ShowGroupsTable({ groups }: Props) {
       helper.accessor("createdAt", {
         header: "Criado em",
         cell: (c) => <ShowGroupsTableCellCreatedAt context={c} />,
-        meta: { className: "w-44 text-right" }
+        meta: { className: "w-44 text-center" }
       }),
       helper.display({
         header: "Grupo pai",

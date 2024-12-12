@@ -14,12 +14,13 @@ const mainButtonVariants = cva(
         "secondary-fill": "bg-secondary-main text-common-branco tracking-wide hover:bg-secondary-main active:bg-secondary-dark",
         "secondary-stroke": "border border-secondary-main text-secondary-main hover:bg-secondary-main hover:text-common-branco active:text-common-branco active:bg-secondary-dark",
         "icon": "text-primary-main hover:bg-common-preto/10 active:bg-common-preto/20",
+        link: "text-zinc-900 underline-offset-4 hover:underline dark:text-zinc-50",
       },
       size: {
         default: "h-10 px-4 py-2",
         sm: "h-9 rounded-md px-3",
         lg: "h-11 rounded-md px-8",
-        icon: "h-6 w-6",
+        icon: "h-7 w-7 p-1",
       },
     },
     defaultVariants: {

@@ -26,7 +26,7 @@ export function ShowGroupsTableParentGroup({ context }: TagCellProps) {
 export function ShowGroupsTableCellCreatedAt({ context }: TagCellProps<string>) {
   const formattedDate = new Date(context.getValue())
   return(
-    <div className="text-right">
+    <div className="text-center">
       {formattedDate.toLocaleString()}
     </div>
   )

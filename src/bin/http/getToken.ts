@@ -1,5 +1,6 @@
 "use server"
 
+import { apiUrl, toJSON } from "@app/lib/api"
 import { createHash } from "crypto"
 
 export async function getToken() {
@@ -11,8 +12,8 @@ export async function getToken() {
   const keys = [user, timestamp, salt, timestamp]
   if(pass) keys.push(pass)
   const hash = createHash("sha256").update(keys.join("-")).digest("hex")
-  const response = await fetch("http://localhost:3334/auth", {
-    body: JSON.stringify({ user, hash, timestamp }),
+  const response = await fetch(`${apiUrl}/auth`, {
+    body: toJSON({ user, hash, timestamp }),
     headers: { "content-type": "application/json" },
     method: "POST"
   })

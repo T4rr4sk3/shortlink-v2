@@ -2,6 +2,7 @@
 
 import { revalidateTag } from "next/cache"
 
+import { tagGetLinkTags } from "@app/bin/endpoints/linkTag"
 import type { CreateTagReturn } from "@app/types/api/tag"
 import type { ApiCallError } from "@app/types/api"
 import { callApi } from "@app/bin/http/callApi"
@@ -13,7 +14,7 @@ export async function doUpdateTag(formData: FormData) {
   const response = await callApi("/tag/" + tagId, { method: "PATCH", data: { name, color } })
   const data = await response.json()
   if(!response.ok) return data as ApiCallError
-  revalidateTag("link-tags")
+  revalidateTag(tagGetLinkTags)
   return data as CreateTagReturn
 }
 

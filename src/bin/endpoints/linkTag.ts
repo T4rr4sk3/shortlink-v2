@@ -3,10 +3,12 @@ import type { ApiCallError } from "@app/types/api"
 import { callApi } from "../http/callApi"
 import { callInternalApi } from "../http/callInternalApi"
 
+export const tagGetLinkTags = "link-tags"
+
 export const getLinkTagsServer = async (name?: string) => {
   const response = await callApi("/tags", {
     params: { name },
-    tags: ["link-tags"],
+    tags: [tagGetLinkTags],
     revalidate: 60
   })
   const data = await response.json()

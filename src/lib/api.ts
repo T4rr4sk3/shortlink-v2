@@ -9,6 +9,14 @@ export function toFormData(data: object) {
   return formData
 }
 
+export function toJSON(data: unknown) {
+  return JSON.stringify(data)
+}
+
+export function fromJSON<T = unknown>(json: string) {
+  return JSON.parse(json) as T
+}
+
 export function dataIsApiCallError(data: unknown): data is ApiCallError {
   if (!data) return false
   return(

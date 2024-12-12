@@ -5,6 +5,7 @@ import { revalidateTag } from "next/cache"
 import type { CreateGroupReturn } from "@app/types/api/group"
 import type { ApiCallError } from "@app/types/api"
 import { callApi } from "@app/bin/http/callApi"
+import { tagGetLinkGroups } from "@app/bin/endpoints/linkGroup"
 
 export async function doCreateGroup(formData: FormData) {
   const name = formData.get("name")?.toString()
@@ -12,7 +13,7 @@ export async function doCreateGroup(formData: FormData) {
   const response = await callApi("/group", { method: "POST", data: { name, parentGroupId } })
   const data = await response.json()
   if(!response.ok) return data as ApiCallError
-  revalidateTag("link-groups")
+  revalidateTag(tagGetLinkGroups)
   return data as CreateGroupReturn
 }
 

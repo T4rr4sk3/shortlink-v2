@@ -19,6 +19,7 @@ import { useLoading } from "@app/hooks/use-loading"
 import CreateLinkFormTagInput from "./tagInput"
 import type { GetTagsReturn } from "@app/types/api/tag"
 import CreateLinkFormTag from "./tag"
+import LinkGroupComboboxControl from "@app/components/forms/custom/linkGroupComboboxControl"
 
 export default function CreateLinkForm() {
   const { handleSubmit, control, reset, resetField, watch, ...formMethods } = useForm({ resolver: yupResolver(createLinkSchema) })
@@ -68,6 +69,7 @@ export default function CreateLinkForm() {
       <form className="space-y-4 w-full max-w-screen-xs mx-auto" onSubmit={handleSubmit(wrap(onSubmitLink))}>
         <InputControl className="w-full" name="url" control={control} required placeholder="Url..." type="url" />
         <InputControl className="w-full" name="name" control={control} required placeholder="Nome..." />
+        <LinkGroupComboboxControl name="groupId" />
         <div className="w-full">
           <CheckboxControl label="Este link expira?" name="expires" control={control} />
           {expires && <InputControl name="expiresAt" control={control} type="date" />}

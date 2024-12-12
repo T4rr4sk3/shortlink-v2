@@ -9,6 +9,7 @@ export default function Logo ({ className }: WithClassName) {
       src="/shortlink/logo.svg"
       width={325}
       height={80}
+      priority
     />
   )
 }

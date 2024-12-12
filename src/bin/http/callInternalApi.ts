@@ -1,5 +1,7 @@
 "use client"
 
+import { toJSON } from "@app/lib/api"
+
 /** used to call this website API */
 export async function callInternalApi<ReturnData = unknown>(path: string, options?: ApiOptions) {
   let baseUrl = "/shortlink/" + path
@@ -10,7 +12,7 @@ export async function callInternalApi<ReturnData = unknown>(path: string, option
   return fetch(baseUrl, {
     method: options?.method,
     headers: { "content-type": "application/json" },
-    body: options?.data ? JSON.stringify(options.data) : null,
+    body: options?.data ? toJSON(options.data) : null,
     cache: options?.cache,
     next: {
       tags: options?.tags,
@@ -18,8 +20,13 @@ export async function callInternalApi<ReturnData = unknown>(path: string, option
     },
   })
   .then(async (response) => {
-    const data = await response.json()
-    return { status: response.status, data }
+    try {
+      const data = await response.json()
+      return { status: response.status, data }
+    } catch (error) {
+      const data = await response.text()
+      return { status: 500, data: toJSON({ error, data }) }
+    }
   })
   .then(({ data, status }) => {
     if([200, 201, 204].includes(status)) {

@@ -6,6 +6,7 @@ import { useRef, useState } from "react"
 import QRCodeLinkImage from "./qrCodeLinkImage"
 import { saveAs } from "file-saver"
 import { useToast } from "@app/hooks/use-toast"
+import { cn } from "@app/lib/utils"
 
 interface ShareLinkProps {
   code: string,
@@ -47,27 +48,32 @@ export default function ShareLink({ name, code, expiresAt }: ShareLinkProps) {
     }
   }
 
-  const haveExpires = Boolean(expiresAt)
-  const expirationDate = expiresAt ? new Date(expiresAt.replace("+00:00", "")).toLocaleDateString() : undefined
+  const expiresAtDate = new Date(expiresAt?.replace("+00:00", "") || "")
+  const haveExpires = isNaN(expiresAtDate.getTime())
+  const expirationString = haveExpires ? expiresAtDate.toLocaleDateString() : undefined
+  const isExpired = haveExpires ? false : expiresAtDate.getTime() < Date.now()
   const copyText = "Aperte CTRL + C para copiar o link selecionado ou selecione toda a caixa de texto para copiar."
 
   return(
     <div className="space-y-4">
       <div className="w-full py-2 px-4 flex justify-between border border-cinza-fumaca-main rounded space-x-2">
-        <input className="text-cinza-fumaca-main w-full" ref={inputRef} onFocus={inputSelectAll} defaultValue={url} readOnly />
-        <MainButton className="grow-0" type="button" onClick={selectAllToClipboard} variant="primary-stroke">
+        <input className={cn("text-cinza-fumaca-main w-full", isExpired && "pointer-events-none cursor-not-allowed")} ref={inputRef} onFocus={inputSelectAll} defaultValue={url} readOnly disabled={isExpired} />
+        <MainButton className="grow-0" type="button" onClick={selectAllToClipboard} variant="primary-stroke" disabled={isExpired}>
           Copiar
         </MainButton>
       </div>
       <p className="max-w-screen-sm">{copyText}</p>
       <div className="flex justify-center">
-        <QRCodeLinkImage code={code} />
+        {isExpired ?
+          <span> Link is expired. </span> :
+          <QRCodeLinkImage code={code} />
+        }
       </div>
       <div className="space-x-4 text-center">
         <MainButton
           loading={downloading === "svg"}
           loadingText="Fazendo download..."
-          disabled={!!downloading}
+          disabled={!!downloading || isExpired}
           onClick={downloadQR("svg")}
           variant="secondary-stroke"
         > .svg
@@ -75,13 +81,13 @@ export default function ShareLink({ name, code, expiresAt }: ShareLinkProps) {
         <MainButton
           loading={downloading === "png"}
           loadingText="Fazendo download..."
-          disabled={!!downloading}
+          disabled={!!downloading || isExpired}
           onClick={downloadQR("png")}
           variant="secondary-stroke"
         > .png
         </MainButton>
       </div>
-      {haveExpires && <p className="text-center"> Expira em: {expirationDate} </p>}
+      {haveExpires && <p className="text-center"> Expira em: {expirationString} </p>}
     </div>
   )
 }

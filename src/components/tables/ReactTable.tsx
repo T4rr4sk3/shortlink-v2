@@ -47,11 +47,21 @@ function ReactTableHead({ context, className, ...props }: ReactTableHeadProps) {
   return <TableHead className={cn(meta?.className, className)} title={title} aria-label={title} {...props} />
 }
 
-export function ReactTableBody({ children, ...props }: ComponentProps<typeof TableBody>) {
-  const { getRowModel } = useReactTableContext()
+interface ReactTableBodyProps extends ComponentProps<typeof TableBody> {
+  emptyMessage?: string,
+}
+export function ReactTableBody({ children, emptyMessage = "Sem resultados.", ...props }: ReactTableBodyProps) {
+  const { getRowModel, getAllColumns } = useReactTableContext()
   const currentRows = getRowModel().rows
   return(
     <TableBody {...props}>
+      {!currentRows.length &&
+        <TableRow>
+          <TableCell colSpan={getAllColumns().length}>
+            {emptyMessage}
+          </TableCell>
+        </TableRow>
+      }
       {currentRows.map(row => (
         <TableRow key={row.id}>
           {row.getVisibleCells().map(cell => (

@@ -3,8 +3,10 @@ import { callInternalApi } from "../http/callInternalApi"
 import type { ApiCallError } from "@app/types/api"
 import { callApi } from "../http/callApi"
 
+export const tagGetLinkGroups = "link-groups"
+
 export const getLinkGroupsServer = async (name?: string) => {
-  const response = await callApi("/groups", { params: { name }, tags: ["link-groups"], revalidate: 60 })
+  const response = await callApi("/groups", { params: { name }, tags: [tagGetLinkGroups], revalidate: 60 })
   const data = await response.json()
   if(response.ok) return data as GetGroupsReturn[]
   return data as ApiCallError
