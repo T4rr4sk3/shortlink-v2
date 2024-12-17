@@ -6,7 +6,7 @@ import { useLoading } from "@app/hooks/use-loading"
 import { MainButton } from "../common/mainButton"
 import { toast } from "@app/hooks/use-toast"
 import LoadingIcon from "../icons/loading"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import ShowLinksGroupsBreadcrumb from "./groupBreadcrumb"
 import ShowLinksTable from "./table"
@@ -29,6 +29,9 @@ export default function ShowLinksComponent() {
     offLoading()
   }, [offLoading, onLoading, searchParams])
   useEffect(() => { searchLinksAndGroups() }, [searchLinksAndGroups])
+    const actions = useMemo(() => {
+      return {searchLinks: searchLinksAndGroups}
+    }, [searchLinksAndGroups])
 
   return(
     <div className="space-y-4">
@@ -48,7 +51,7 @@ export default function ShowLinksComponent() {
         </MainButton>
       </div>
 
-      <ActionsProvider>
+      <ActionsProvider initialActions={actions}>
         {links &&
           <ShowLinksTable
             links={links?.linksOrGroups}

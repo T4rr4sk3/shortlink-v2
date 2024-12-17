@@ -35,6 +35,21 @@ const config: Config = {
 					light: "#BA68C8",
 					dark: "#7B1FA2",
 				},
+				"alert-red": {
+					main: "#DC2626",
+					light: "#EF4444",
+					dark: "#B91C1C",
+				},
+				"alert-green": {
+					main: "#16A34A",
+					light: "#4ADE80",
+					dark: "#15803D",
+				},
+				"alert-yellow": {
+					main: "#F97316",
+					light: "#FB923C",
+					dark: "#EA580C",
+				},
   		},
   		borderRadius: {
   			lg: "var(--radius)",

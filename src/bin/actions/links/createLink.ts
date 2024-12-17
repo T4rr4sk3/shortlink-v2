@@ -1,12 +1,12 @@
 "use server"
 
-import { tagGetLinkGroupTree } from "../endpoints/linkGroupTree"
+import { tagGetLinkGroupTree } from "../../endpoints/linkGroupTree"
 import type { LinkCreatedReturn } from "@app/types/api/link"
-import { tagGetLinkGroups } from "../endpoints/linkGroup"
-import { tagGetLinkTags } from "../endpoints/linkTag"
+import { tagGetLinkGroups } from "../../endpoints/linkGroup"
+import { tagGetLinkTags } from "../../endpoints/linkTag"
 import type { ApiCallError } from "@app/types/api"
 import { revalidateTags } from "@app/lib/next"
-import { callApi } from "../http/callApi"
+import { callApi } from "../../http/callApi"
 
 export async function doCreateLink(formData: FormData) {
   const name = formData.get("name")?.toString()
@@ -50,7 +50,9 @@ export async function doCreateLinkFake(formData: FormData, fakeError?: boolean) 
 }
 
 function getTags(formData: FormData) {
-  return formData.get("tags")?.toString()?.split(",").map((tagId) => parseInt(tagId))
+  const tagsValue = formData.get("tags")?.toString()
+  if(!tagsValue) return []
+  return tagsValue.split(",").map((tagId) => parseInt(tagId))
 }
 
 function getGroupId(formData: FormData) {

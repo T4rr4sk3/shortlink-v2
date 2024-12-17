@@ -4,7 +4,7 @@ import { ReactTableCellBase, ReactTableCellDate } from "@app/components/tables/R
 import { ReactTableHeadBase } from "@app/components/tables/ReactTableHeads"
 import ReactTablePaginator from "@app/components/tables/ReactTablePaginator"
 import type { LinkOrGroup } from "@app/types/api/linkGroupTree"
-import { ShowLinksTableCellCode, ShowLinksTableCellExpires, ShowLinksTableCellName, ShowLinksTableCellTags, ShowLinksTableCellUrl } from "./cell"
+import { ShowLinksTableCellActions, ShowLinksTableCellCode, ShowLinksTableCellExpires, ShowLinksTableCellName, ShowLinksTableCellTags, ShowLinksTableCellUrl } from "./cell"
 
 const helper = createColumnHelper<LinkOrGroup>()
 
@@ -55,6 +55,11 @@ export default function ShowLinksTable({ links, searchName }: Props) {
         header: "Tags",
         cell: (c) => <ShowLinksTableCellTags context={c} />,
       }),
+      helper.display({
+        header: "Ações",
+        cell: (c) => <ShowLinksTableCellActions context={c} />,
+        meta: { className: "w-40" }
+      })
     ],
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

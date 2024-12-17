@@ -3,8 +3,9 @@ import type { ApiCallError } from "@app/types/api"
 export function toFormData(data: object) {
   const formData = new FormData()
   Object.entries(data).forEach(([key, value]) => {
+    if(value === null || value === undefined) return
     const isArray = Array.isArray(value)
-    formData.append(key, isArray ? value.join() : typeof value === "boolean" ? value : value || null)
+    formData.append(key, isArray && value.length ? value.join() : typeof value === "boolean" ? value : value || null)
   })
   return formData
 }

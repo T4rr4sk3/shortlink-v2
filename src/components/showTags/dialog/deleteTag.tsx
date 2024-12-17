@@ -13,7 +13,7 @@ export default function ShowTagsDeleteTagDialog({ tag }: { tag: Pick<GetTagsRetu
   async function handleSubmit() {
     const error = await doDeleteTag(toFormData({ tagId: tag.id }))
     if(error) {
-      const message = getApiCallErrorMessage(error, "Erro na criação")
+      const message = getApiCallErrorMessage(error, "Erro ao deletar tag")
       toast({ description: message, variant: "error" })
     } else {
       const message = `Tag '${tag.name}' deletada com sucesso!`

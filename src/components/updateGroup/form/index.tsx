@@ -12,9 +12,14 @@ import { useLoading } from "@app/hooks/use-loading"
 import { useToast } from "@app/hooks/use-toast"
 import { Form } from "@app/components/ui/form"
 
-interface UpdateGroupFormProps { groupId: number, defaultValues: UpdateGroupSchema, onDone?: () => void, onCancel?: () => void }
+interface UpdateGroupFormProps {
+  groupId: number,
+  defaultValues: UpdateGroupSchema,
+  onDone?: () => void,
+  onCancel?: () => void
+}
 export default function UpdateGroupForm({ groupId, defaultValues, onDone, onCancel }: UpdateGroupFormProps) {
-  const { handleSubmit, watch, resetField, ...formMethods } = useForm({ resolver: yupResolver(updateGroupSchema), defaultValues: defaultValues })
+  const { handleSubmit, watch, resetField, ...formMethods } = useForm({ resolver: yupResolver(updateGroupSchema), defaultValues })
   const { loading, wrap } = useLoading()
   const { toast } = useToast()
 

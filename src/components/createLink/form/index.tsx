@@ -5,7 +5,7 @@ import { MainButton } from "@app/components/common/mainButton"
 import InputControl from "@app/components/forms/inputControl"
 import { dataIsApiCallError, getApiCallErrorMessage, toFormData } from "@app/lib/api"
 import type { LinkCreatedReturn } from "@app/types/api/link"
-import { doCreateLink } from "@app/bin/actions/createLink"
+import { doCreateLink } from "@app/bin/actions/links/createLink"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { Dialog } from "@app/components/ui/dialog"
 import { Form } from "@app/components/ui/form"
@@ -20,6 +20,7 @@ import CreateLinkFormTagInput from "./tagInput"
 import type { GetTagsReturn } from "@app/types/api/tag"
 import CreateLinkFormTag from "./tag"
 import LinkGroupComboboxControl from "@app/components/forms/custom/linkGroupComboboxControl"
+import { LINK_NAME_MAX_LENGTH } from "@app/lib/link"
 
 export default function CreateLinkForm() {
   const { handleSubmit, control, reset, resetField, watch, ...formMethods } = useForm({ resolver: yupResolver(createLinkSchema) })
@@ -68,7 +69,7 @@ export default function CreateLinkForm() {
     <Form {...formMethods} handleSubmit={handleSubmit} reset={reset} watch={watch} resetField={resetField} control={control}>
       <form className="space-y-4 w-full max-w-screen-xs mx-auto" onSubmit={handleSubmit(wrap(onSubmitLink))}>
         <InputControl className="w-full" name="url" control={control} required placeholder="Url..." type="url" />
-        <InputControl className="w-full" name="name" control={control} required placeholder="Nome..." />
+        <InputControl className="w-full" name="name" control={control} required placeholder="Nome..." maxLength={LINK_NAME_MAX_LENGTH} />
         <LinkGroupComboboxControl name="groupId" />
         <div className="w-full">
           <CheckboxControl label="Este link expira?" name="expires" control={control} />

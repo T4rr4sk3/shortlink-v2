@@ -47,3 +47,7 @@ export interface SimpleLink {
   expiresAt: string | null,
   groupId: number | null
 }
+
+export interface SimpleLinkWithTags extends SimpleLink {
+  linkTags: LinkTag[],
+}

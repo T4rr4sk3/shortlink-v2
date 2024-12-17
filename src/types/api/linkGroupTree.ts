@@ -1,10 +1,10 @@
 import type { SimpleGroup } from "./group";
-import type { SimpleLink } from "./link";
+import type { SimpleLink, SimpleLinkWithTags } from "./link";
 
 export interface GetLinkGroupTreeReturn {
   parentGroup: SimpleGroup | null,
   childrenGroup: SimpleGroup[],
-  childrenLink: SimpleLink[],
+  childrenLink: SimpleLinkWithTags[],
 }
 
 export interface GetLinkGroupTreeGroupPathReturn {
@@ -15,7 +15,8 @@ export interface GetLinkGroupTreeGroupPathReturn {
 
 export interface GetLinkGroupTreeLinkPathReturn {
   link: SimpleLink,
-  path: string
+  path: string,
+  groupsOnPath: SimpleGroup[]
 }
 
 export interface LinkOrGroup {
@@ -23,7 +24,7 @@ export interface LinkOrGroup {
   name: string,
   createdAt: string,
   type: "link" | "group",
-  linkInfo?: SimpleLink,
+  linkInfo?: SimpleLinkWithTags,
   groupInfo?: SimpleGroup,
 }
 
