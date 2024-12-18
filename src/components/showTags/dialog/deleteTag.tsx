@@ -4,8 +4,8 @@ import { getApiCallErrorMessage, toFormData } from "@app/lib/api";
 import { doDeleteTag } from "@app/bin/actions/tags/deleteTag";
 import type { GetTagsReturn } from "@app/types/api/tag";
 import DeleteIcon from "@app/components/icons/delete";
-import { useToast } from "@app/hooks/use-toast";
 import { useActions } from "@app/hooks/use-actions";
+import { useToast } from "@app/hooks/use-toast";
 
 export default function ShowTagsDeleteTagDialog({ tag }: { tag: Pick<GetTagsReturn, "id" | "name">}) {
   const { callAction } = useActions()

@@ -1,10 +1,11 @@
+import { useState } from "react";
+
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@app/components/ui/dialog";
 import { MainButton } from "@app/components/common/mainButton";
-import EditIcon from "@app/components/icons/edit";
 import UpdateGroupForm from "@app/components/updateGroup/form";
 import type { GetGroupsReturn } from "@app/types/api/group";
 import { useActions } from "@app/hooks/use-actions";
-import { useState } from "react";
+import EditIcon from "@app/components/icons/edit";
 
 export default function ShowGroupsEditGroupDialog({ group }: { group: Pick<GetGroupsReturn, "id" | "name" | "parentGroupId">}) {
   const [isOpen, setOpen] = useState(false)

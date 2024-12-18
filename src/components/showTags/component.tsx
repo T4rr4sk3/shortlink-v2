@@ -1,17 +1,17 @@
 "use client"
-
 import { useCallback, useEffect, useMemo, useState } from "react"
+import { useSearchParams } from "next/navigation"
+
 import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api"
 import { getLinkTagsClient } from "@app/bin/endpoints/linkTag"
+import ActionsProvider from "../provider/ActionsProvider"
 import type { GetTagsReturn } from "@app/types/api/tag"
 import { useLoading } from "@app/hooks/use-loading"
-import { toast } from "@app/hooks/use-toast"
-import ShowTagsTable from "./table"
 import { MainButton } from "../common/mainButton"
-import { useSearchParams } from "next/navigation"
 import CreateTagModal from "../createTag/modal"
+import { toast } from "@app/hooks/use-toast"
 import LoadingIcon from "../icons/loading"
-import ActionsProvider from "../provider/ActionsProvider"
+import ShowTagsTable from "./table"
 
 export default function ShowTagsComponent({ tagNameParamName: searchName }: { tagNameParamName: string }) {
   const { onLoading, offLoading, loading } = useLoading()

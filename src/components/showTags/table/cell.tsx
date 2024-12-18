@@ -1,8 +1,9 @@
+import Link from "next/link";
+
+import ShowTagsDeleteTagDialog from "../dialog/deleteTag";
 import type { GetTagsReturn } from "@app/types/api/tag";
 import type { CustomCellProps } from "@app/types/props";
-import ShowTagsDeleteTagDialog from "../dialog/deleteTag";
 import ShowTagsEditTagDialog from "../dialog/editTag";
-import Link from "next/link";
 import TagIcon from "@app/components/icons/tag";
 
 type TagCellProps<T = unknown> = CustomCellProps<GetTagsReturn, T>

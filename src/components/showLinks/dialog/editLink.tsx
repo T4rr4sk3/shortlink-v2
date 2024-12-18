@@ -1,10 +1,11 @@
-import { MainButton } from "@app/components/common/mainButton"
-import EditIcon from "@app/components/icons/edit"
+import { useState } from "react"
+
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@app/components/ui/dialog"
+import { MainButton } from "@app/components/common/mainButton"
+import type { SimpleLinkWithTags } from "@app/types/api/link"
 import UpdateLinkForm from "@app/components/updateLink/form"
 import { useActions } from "@app/hooks/use-actions"
-import type { SimpleLinkWithTags } from "@app/types/api/link"
-import { useState } from "react"
+import EditIcon from "@app/components/icons/edit"
 
 type LinkToEdit = Pick<SimpleLinkWithTags, "id" | "name" | "expiresAt" | "groupId" | "linkTags">
 export default function ShowLinksEditLinkDialog({ link }: { link: LinkToEdit }) {

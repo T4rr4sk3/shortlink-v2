@@ -1,8 +1,9 @@
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@app/components/ui/dialog";
-import CreateTagForm from "../form";
-import { MainButton } from "@app/components/common/mainButton";
 import { useState } from "react";
+
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@app/components/ui/dialog";
+import { MainButton } from "@app/components/common/mainButton";
 import AddTagIcon from "@app/components/icons/addTag";
+import CreateTagForm from "../form";
 
 interface CreateTagModalProps {
   onClose?: () => void,

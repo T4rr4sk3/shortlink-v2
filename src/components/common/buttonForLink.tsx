@@ -1,5 +1,5 @@
-import { cn } from "@app/lib/utils";
 import { forwardRef, type ComponentProps } from "react";
+import { cn } from "@app/lib/utils";
 
 const ButtonForLink = forwardRef<HTMLButtonElement, ComponentProps<"button">>(
   ({ className, ...props }, ref) => {

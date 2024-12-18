@@ -1,15 +1,16 @@
 "use client"
+import { useCallback, useEffect, useState } from "react";
+import { Check } from "lucide-react";
+
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@app/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@app/components/ui/popover";
 import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api";
 import { getLinkTagsClient } from "@app/bin/endpoints/linkTag";
-import type { GetTagsReturn } from "@app/types/api/tag";
-import { Button } from "@app/components/ui/button";
-import { useLoading } from "@app/hooks/use-loading";
-import { toast } from "@app/hooks/use-toast";
-import { useCallback, useEffect, useState } from "react";
-import { Check } from "lucide-react";
 import { MainButton } from "@app/components/common/mainButton";
+import type { GetTagsReturn } from "@app/types/api/tag";
+import { useLoading } from "@app/hooks/use-loading";
+import { Button } from "@app/components/ui/button";
+import { toast } from "@app/hooks/use-toast";
 
 interface TagInputProps {
   onIncludeTag: (tag: GetTagsReturn) => void,

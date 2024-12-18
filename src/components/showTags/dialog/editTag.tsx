@@ -1,10 +1,11 @@
-import { MainButton } from "@app/components/common/mainButton";
-import EditIcon from "@app/components/icons/edit";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@app/components/ui/dialog";
-import UpdateTagForm from "@app/components/updateTag/form";
-import { useActions } from "@app/hooks/use-actions";
-import type { GetTagsReturn } from "@app/types/api/tag";
 import { useState } from "react";
+
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@app/components/ui/dialog";
+import { MainButton } from "@app/components/common/mainButton";
+import UpdateTagForm from "@app/components/updateTag/form";
+import type { GetTagsReturn } from "@app/types/api/tag";
+import { useActions } from "@app/hooks/use-actions";
+import EditIcon from "@app/components/icons/edit";
 
 export default function ShowTagsEditTagDialog({ tag }: { tag: Pick<GetTagsReturn, "id" | "name" | "color">}) {
   const [isOpen, setOpen] = useState(false)

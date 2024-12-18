@@ -1,5 +1,6 @@
-import { apiUrl } from "@app/lib/api";
 import Image from "next/image";
+
+import { apiUrl } from "@app/lib/api";
 
 export default function QRCodeLinkImage({ code }: { code: string }) {
   const width = 128

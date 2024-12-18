@@ -2,6 +2,7 @@
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form"
 
+import LinkGroupComboboxControl from "@app/components/forms/custom/linkGroupComboboxControl"
 import { dataIsApiCallError, getApiCallErrorMessage, toFormData } from "@app/lib/api"
 import { doCreateGroup } from "@app/bin/actions/groups/createGroup"
 import { MainButton } from "@app/components/common/mainButton"
@@ -11,7 +12,6 @@ import { Form } from "@app/components/ui/form"
 import type { CreateGroupSchema} from "./yup"
 import { toast } from "@app/hooks/use-toast"
 import { createGroupSchema } from "./yup"
-import LinkGroupComboboxControl from "@app/components/forms/custom/linkGroupComboboxControl"
 
 interface CreateGroupFormProps { onDone?: () => void, onCancel?: () => void }
 export default function CreateGroupForm({ onDone, onCancel }: CreateGroupFormProps) {

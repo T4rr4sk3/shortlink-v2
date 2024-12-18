@@ -1,11 +1,11 @@
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@app/components/ui/alert-dialog";
 import { MainButton, mainButtonVariants } from "@app/components/common/mainButton";
+import { doDeleteGroup } from "@app/bin/actions/groups/deleteGroup";
 import { getApiCallErrorMessage, toFormData } from "@app/lib/api";
 import type { GetGroupsReturn } from "@app/types/api/group";
 import DeleteIcon from "@app/components/icons/delete";
-import { useToast } from "@app/hooks/use-toast";
 import { useActions } from "@app/hooks/use-actions";
-import { doDeleteGroup } from "@app/bin/actions/groups/deleteGroup";
+import { useToast } from "@app/hooks/use-toast";
 
 export default function ShowGroupsDeleteGroupDialog({ group }: { group: Pick<GetGroupsReturn, "id" | "name">}) {
   const { callAction } = useActions()

@@ -1,6 +1,6 @@
+import { boolean, object, string, type InferType } from "yup";
+
 import { HEX_COLOR } from "@app/lib/regexp";
-import { boolean, object, string } from "yup";
-import type { InferType } from "yup";
 
 export const createTagSchema = object({
   name: string().min(3, "Nome da tag muito curto")

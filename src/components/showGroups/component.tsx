@@ -1,16 +1,16 @@
 "use client"
-
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
+
 import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api"
+import { getLinkGroupsClient } from "@app/bin/endpoints/linkGroup"
+import type { GetGroupsReturn } from "@app/types/api/group"
+import ActionsProvider from "../provider/ActionsProvider"
+import CreateGroupModal from "../createGroup/modal"
 import { useLoading } from "@app/hooks/use-loading"
+import { MainButton } from "../common/mainButton"
 import { toast } from "@app/hooks/use-toast"
 import LoadingIcon from "../icons/loading"
-import { MainButton } from "../common/mainButton"
-import { getLinkGroupsClient } from "@app/bin/endpoints/linkGroup"
-import ActionsProvider from "../provider/ActionsProvider"
-import type { GetGroupsReturn } from "@app/types/api/group"
-import CreateGroupModal from "../createGroup/modal"
 import ShowGroupsTable from "./table"
 
 export default function ShowGroupsComponent({ groupNameParamName: searchName }: { groupNameParamName: string }) {

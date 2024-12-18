@@ -1,8 +1,9 @@
+import { useState } from "react";
+
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@app/components/ui/dialog";
 import { MainButton } from "@app/components/common/mainButton";
-import CreateGroupForm from "../form";
-import { useState } from "react";
 import AddGroupIcon from "@app/components/icons/addGroup";
+import CreateGroupForm from "../form";
 
 interface CreateGroupModalProps {
   onClose?: () => void,

@@ -1,7 +1,8 @@
-import { cn } from "@app/lib/utils";
-import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
+import { Slot } from "@radix-ui/react-slot";
 import { forwardRef } from "react";
+
+import { cn } from "@app/lib/utils";
 
 const className = ""
 const headingVariants = cva(className, {

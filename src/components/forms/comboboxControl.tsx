@@ -1,12 +1,13 @@
+import type { Control, FieldPath, FieldValue, FieldValues } from "react-hook-form"
+
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "../ui/command"
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form"
-import type { Control, FieldPath, FieldValue, FieldValues } from "react-hook-form"
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover"
 import ChevronUpDownIcon from "../icons/chevronUpDown"
+import LoadingIcon from "../icons/loading"
+import CheckIcon from "../icons/check"
 import { Button } from "../ui/button"
 import { cn } from "@app/lib/utils"
-import { Check } from "lucide-react"
-import LoadingIcon from "../icons/loading"
 
 type ComboOption = {label: string, value: string}
 interface ComboboxControlProps<
@@ -80,13 +81,13 @@ TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
                       {emptyLabel &&
                         <CommandItem value={emptyLabel} onSelect={onChangeValue(String(emptyValue))}>
                           {emptyLabel}
-                          <Check className={iconClassName(String(emptyValue))} />
+                          <CheckIcon className={iconClassName(String(emptyValue))} />
                         </CommandItem>
                       }
                       {options.map(option => (
                         <CommandItem key={option.value} value={option.label} onSelect={onChangeValue(option.value)}>
                           {option.label}
-                          <Check className={iconClassName(option.value)} />
+                          <CheckIcon className={iconClassName(option.value)} />
                         </CommandItem>
                       ))}
                     </CommandGroup>

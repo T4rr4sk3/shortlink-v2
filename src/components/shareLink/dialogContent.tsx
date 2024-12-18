@@ -1,7 +1,8 @@
 import type { ComponentProps } from "react";
-import ShareLink from ".";
+
 import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog";
 import { MainButton } from "../common/mainButton";
+import ShareLink from ".";
 
 interface ShareLinkDialogContentProps extends ComponentProps<typeof ShareLink> {
   onClose?: () => void

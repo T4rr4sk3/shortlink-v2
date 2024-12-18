@@ -1,9 +1,10 @@
-import type { WithClassName } from "@app/types/props";
 import Link from "next/link";
+
+import type { WithClassName } from "@app/types/props";
 import ButtonForLink from "./buttonForLink";
 import AddLinkIcon from "../icons/addLink";
-import LinkIcon from "../icons/link";
 import GroupsIcon from "../icons/groups";
+import LinkIcon from "../icons/link";
 import TagsIcon from "../icons/tags";
 import { cn } from "@app/lib/utils";
 

@@ -1,7 +1,8 @@
-import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "../ui/breadcrumb"
-import type { SimpleGroup } from "@app/types/api/group"
 import { Fragment } from "react"
 import Link from "next/link"
+
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "../ui/breadcrumb"
+import type { SimpleGroup } from "@app/types/api/group"
 
 interface Props {
   currentGroup?: SimpleGroup | null,

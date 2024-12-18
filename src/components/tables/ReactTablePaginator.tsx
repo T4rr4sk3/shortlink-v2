@@ -1,9 +1,10 @@
+import type { ChangeEventHandler, PropsWithChildren } from "react"
+
 import { Pagination, PaginationButton, PaginationButtonNext, PaginationButtonPrevious, PaginationContent, PaginationItem } from "../ui/pagination"
 import { TableCell, TableFooter, TableHead, TableHeader, TableRow } from "../ui/table"
 import { getLinesLabel, getPageOptionsByCurrentPage } from "@app/lib/pagination"
 import type { PaginatorProps, PaginatorSide } from "@app/types/props"
 import { useReactTableContext } from "@app/hooks/use-react-table"
-import type { ChangeEventHandler, PropsWithChildren } from "react"
 import { cn } from "@app/lib/utils"
 
 export default function ReactTablePaginator({ side = "bottom", showLines = true, linesLabel = "Total de linhas: " }: PaginatorProps) {

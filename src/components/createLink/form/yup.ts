@@ -1,5 +1,4 @@
-import { array, boolean, number, object, string } from "yup";
-import type { InferType } from "yup";
+import { array, boolean, number, object, string, type InferType } from "yup";
 
 const createLinkTagScheme = object({
   id: number().positive("Número inválido").required("Id da tag obrigatória"),

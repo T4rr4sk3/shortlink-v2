@@ -1,6 +1,7 @@
-import type { Control, FieldPath, FieldValue, FieldValues} from "react-hook-form";
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import type { Control, FieldPath, FieldValue, FieldValues } from "react-hook-form";
 import { useId, type ChangeEvent, type ComponentPropsWithoutRef } from "react";
+
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
 import { MainInput } from "./mainInput";
 
 interface InputControlProps<

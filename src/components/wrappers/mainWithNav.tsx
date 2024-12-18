@@ -1,8 +1,9 @@
+import Link from "next/link";
+
 import type { WrapperProps } from "@app/types/props";
+import NavLinks from "../common/navLinks";
 import { cn } from "@app/lib/utils";
 import Logo from "../common/logo";
-import NavLinks from "../common/navLinks";
-import Link from "next/link";
 
 export default function MainWrapperWithNav({ children, className }: WrapperProps) {
   return(

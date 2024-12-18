@@ -1,5 +1,4 @@
-import { number, object, string } from "yup";
-import type { InferType } from "yup";
+import { number, object, string, type InferType } from "yup";
 
 export const updateGroupSchema = object({
   name: string().min(3, "Nome do grupo muito curto")

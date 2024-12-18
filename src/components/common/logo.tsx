@@ -1,5 +1,6 @@
-import type { WithClassName } from "@app/types/props";
 import Image from "next/image";
+
+import type { WithClassName } from "@app/types/props";
 
 export default function Logo ({ className }: WithClassName) {
   return (
