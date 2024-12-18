@@ -7,7 +7,7 @@ export async function callApi(path: string, options?: ApiOptions) {
   const token = await getToken()
   let baseUrl = apiUrl + path
   if(options?.params && objectHaveSomeVales(options.params)) {
-    const qs = new URLSearchParams(Object.entries(options.params))
+    const qs = new URLSearchParams(getObjectEntries(options.params))
     baseUrl += "?" + qs.toString()
   }
   return fetch(baseUrl, {
@@ -26,9 +26,15 @@ export async function callApi(path: string, options?: ApiOptions) {
 }
 
 function objectHaveSomeVales(obj: object) {
-  return Object.values(obj).some((value) =>
-    typeof value !== "undefined" && value !== "undefined"
-  )
+  return Object.values(obj).some(isNotUndefined)
+}
+
+function getObjectEntries(obj: object) {
+  return Object.entries(obj).filter(([, value]) => isNotUndefined(value))
+}
+
+function isNotUndefined(value: unknown) {
+  return typeof value !== "undefined" && value !== "undefined"
 }
 
 type ApiOptions = {

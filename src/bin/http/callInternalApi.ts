@@ -6,7 +6,7 @@ import { toJSON } from "@app/lib/api"
 export async function callInternalApi<ReturnData = unknown>(path: string, options?: ApiOptions) {
   let baseUrl = "/shortlink/" + path
   if(options?.params && objectHaveSomeVales(options.params)) {
-    const qs = new URLSearchParams(Object.entries(options.params))
+    const qs = new URLSearchParams(getObjectEntries(options.params))
     baseUrl += "?" + qs.toString()
   }
   return fetch(baseUrl, {
@@ -37,9 +37,15 @@ export async function callInternalApi<ReturnData = unknown>(path: string, option
 }
 
 function objectHaveSomeVales(obj: object) {
-  return Object.values(obj).some((value) =>
-    typeof value !== "undefined" && value !== "undefined"
-  )
+  return Object.values(obj).some(isNotUndefined)
+}
+
+function getObjectEntries(obj: object) {
+  return Object.entries(obj).filter(([, value]) => isNotUndefined(value))
+}
+
+function isNotUndefined(value: unknown) {
+  return typeof value !== "undefined" && value !== "undefined"
 }
 
 type ApiOptions = {

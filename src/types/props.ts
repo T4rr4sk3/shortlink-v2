@@ -9,8 +9,14 @@ export interface WrapperProps extends WithClassName, PropsWithChildren {
 
 }
 
+/** Props to a next component that will receive the `params` props */
 export interface WithParams<T> {
   params: T
+}
+
+/** Props to a next component that will receive the `searchParams` props */
+export interface WithSearchParams<T> {
+  searchParams: T
 }
 
 // tables

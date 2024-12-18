@@ -1,4 +1,4 @@
-import type { GetTagsReturn } from "@app/types/api/tag"
+import type { GetTagByIdReturn, GetTagsReturn } from "@app/types/api/tag"
 import type { ApiCallError } from "@app/types/api"
 import { callApi } from "../http/callApi"
 import { callInternalApi } from "../http/callInternalApi"
@@ -42,4 +42,11 @@ export const getLinkTagsFake = async (name?: string, fakeError?: boolean) => {
   ]
   if(!name) return tags
   return tags.filter((t) => t.name.includes(name))
+}
+
+export async function getTagByIdServer(id: number | string) {
+  const response = await callApi("/tag/" + id, { tags: [tagGetLinkTags, id.toString()] })
+  const data = await response.json()
+  if(response.ok) return data as GetTagByIdReturn
+  return data as ApiCallError
 }

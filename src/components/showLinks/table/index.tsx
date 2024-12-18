@@ -48,7 +48,7 @@ export default function ShowLinksTable({ links, searchName }: Props) {
       helper.accessor("createdAt", {
         header: "Criado em",
         cell: (c) => <ReactTableCellDate context={c} />,
-        meta: { className: "w-44 text-right" }
+        meta: { className: "w-44 text-center" }
       }),
       helper.display({
         id: "tags",

@@ -12,22 +12,21 @@ import ShowLinksGroupsBreadcrumb from "./groupBreadcrumb"
 import ShowLinksTable from "./table"
 import ActionsProvider from "../provider/ActionsProvider"
 
-export default function ShowLinksComponent() {
+export default function ShowLinksComponent({ groupIdParamName: searchName }: { groupIdParamName: string }) {
   const [links, setLinks] = useState<GetLinkGroupTreeInternalReturn>()
   const { onLoading, offLoading, loading } = useLoading()
   const searchParams = useSearchParams()
-  const searchName = "group-id"
+  const searchValue = searchParams.get(searchName) || undefined
 
   const searchLinksAndGroups = useCallback(async () => {
     onLoading()
-    const group = searchParams.get(searchName) || undefined
-    const data = await getLinkGroupTreeClient(group)
+    const data = await getLinkGroupTreeClient(searchValue)
     if(dataIsApiCallError(data)) {
-      const message = getApiCallErrorMessage(data, "Buscar grupos")
+      const message = getApiCallErrorMessage(data, "Buscar links")
       toast({ description: message, variant: "error" })
     } else setLinks(data)
     offLoading()
-  }, [offLoading, onLoading, searchParams])
+  }, [offLoading, onLoading, searchValue])
   useEffect(() => { searchLinksAndGroups() }, [searchLinksAndGroups])
     const actions = useMemo(() => {
       return {searchLinks: searchLinksAndGroups}

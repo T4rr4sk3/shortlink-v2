@@ -19,6 +19,7 @@ export interface GetLinkReturn {
   visits: number,
   createdAt: string,
   expiresAt: string | null,
+  groupId: number | null,
   linkGroup: LinkGroup | null,
   linkTags: LinkTag[],
 }

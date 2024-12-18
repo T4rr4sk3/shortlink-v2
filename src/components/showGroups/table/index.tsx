@@ -3,9 +3,9 @@ import { createColumnHelper, getCoreRowModel, getPaginationRowModel, getSortedRo
 import { ReactTable, ReactTableBody, ReactTableHeader } from "@app/components/tables/ReactTable"
 import ReactTablePaginator from "@app/components/tables/ReactTablePaginator"
 import { ReactTableHeadBase } from "@app/components/tables/ReactTableHeads"
-import { ReactTableCellBase } from "@app/components/tables/ReactTableCells"
+import { ReactTableCellBase, ReactTableCellDate } from "@app/components/tables/ReactTableCells"
 import type { GetGroupsReturn } from "@app/types/api/group"
-import { ShowGroupsTableCellActions, ShowGroupsTableCellCreatedAt, ShowGroupsTableParentGroup } from "./cell"
+import { ShowGroupsTableCellActions, ShowGroupsTableCellName, ShowGroupsTableParentGroup } from "./cell"
 
 const helper = createColumnHelper<GetGroupsReturn>()
 
@@ -22,27 +22,28 @@ export default function ShowGroupsTable({ groups }: Props) {
         meta: { className: "w-20 text-right" }
       }),
       helper.accessor("name", {
-        header: (c) => <ReactTableHeadBase context={c} title="Nome" />
-      }),
-      helper.accessor("createdAt", {
-        header: "Criado em",
-        cell: (c) => <ShowGroupsTableCellCreatedAt context={c} />,
-        meta: { className: "w-44 text-center" }
+        header: (c) => <ReactTableHeadBase context={c} title="Nome" />,
+        cell: (c) => <ShowGroupsTableCellName context={c} searchName="group-id" />,
       }),
       helper.display({
         header: "Grupo pai",
         cell: (c) => <ShowGroupsTableParentGroup context={c} />,
-        meta: { className: "w-44" }
+        meta: { className: "w-96" }
+      }),
+      helper.accessor("createdAt", {
+        header: "Criado em",
+        cell: (c) => <ReactTableCellDate context={c} />,
+        meta: { className: "w-44 text-center" }
       }),
       helper.accessor("links", {
         header: "Nº de links",
         cell: (c) => <ReactTableCellBase context={c} inCenter />,
-        meta: { className: "w-28 text-center" }
+        meta: { className: "w-32 text-center" }
       }),
       helper.display({
         header: "Ações",
         cell: (c) => <ShowGroupsTableCellActions context={c} />,
-        meta: { className: "w-40" }
+        meta: { className: "w-44" }
       })
     ],
     getCoreRowModel: getCoreRowModel(),
