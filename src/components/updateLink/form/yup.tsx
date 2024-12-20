@@ -15,7 +15,7 @@ export const updateLinkSchema = object({
   //   return date.getTime() > Date.now()
   // })
   .transform((value) => {
-    if (typeof value !== "string") return value
+    if (typeof value !== "string" || !value) return null
     return value + "T00:00"
   }),
   groupId: number().positive("Número inválido").optional().nullable(),

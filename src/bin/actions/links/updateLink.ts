@@ -1,7 +1,6 @@
 "use server"
-
-import { tagGetLinkGroups } from "@app/bin/endpoints/linkGroup"
 import { tagGetLinkGroupTree } from "@app/bin/endpoints/linkGroupTree"
+import { tagGetLinkGroups } from "@app/bin/endpoints/linkGroup"
 import type { LinkCreatedReturn } from "@app/types/api/link"
 import { tagGetLinkTags } from "@app/bin/endpoints/linkTag"
 import type { ApiCallError } from "@app/types/api"

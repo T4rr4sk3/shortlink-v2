@@ -1,5 +1,4 @@
 "use server"
-
 import { tagGetLinkGroupTree } from "../../endpoints/linkGroupTree"
 import type { LinkCreatedReturn } from "@app/types/api/link"
 import { tagGetLinkGroups } from "../../endpoints/linkGroup"

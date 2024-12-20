@@ -1,7 +1,7 @@
+import { callInternalApi } from "../http/callInternalApi";
 import type { GetLinkReturn } from "@app/types/api/link";
 import type { ApiCallError } from "@app/types/api";
 import { callApi } from "../http/callApi";
-import { callInternalApi } from "../http/callInternalApi";
 
 export const tagGetLink = "link"
 

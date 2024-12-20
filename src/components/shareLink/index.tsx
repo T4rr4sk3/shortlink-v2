@@ -49,7 +49,7 @@ export default function ShareLink({ name, code, expiresAt }: ShareLinkProps) {
   }
 
   const expiresAtDate = new Date(expiresAt?.replace("+00:00", "") || "")
-  const haveExpires = isNaN(expiresAtDate.getTime())
+  const haveExpires = !isNaN(expiresAtDate.getTime())
   const expirationString = haveExpires ? expiresAtDate.toLocaleDateString() : undefined
   const isExpired = haveExpires ? false : expiresAtDate.getTime() < Date.now()
   const copyText = "Aperte CTRL + C para copiar o link selecionado ou selecione toda a caixa de texto para copiar."

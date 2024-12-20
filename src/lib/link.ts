@@ -5,3 +5,7 @@ export function verifyIfIsExpiredByExpiresAt(expires: string) {
   if(isNaN(expiresMs)) throw new Error("Link expires is invalid!")
   return Date.now() > expiresMs
 }
+
+export function linkGroupHref(groupId: number, searchName: string) {
+  return `/show-links?${searchName}=${groupId}`
+}

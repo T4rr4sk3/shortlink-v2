@@ -29,7 +29,8 @@ export default function ShowLinksTable({ links, searchName }: Props) {
       helper.display({
         id: "url",
         header: "URL",
-        cell: (c) => <ShowLinksTableCellUrl context={c} />
+        cell: (c) => <ShowLinksTableCellUrl context={c} />,
+        meta: { className: "w-80" }
       }),
       helper.accessor("linkInfo.expiresAt", {
         header: "Expira",
@@ -49,12 +50,13 @@ export default function ShowLinksTable({ links, searchName }: Props) {
       helper.accessor("createdAt", {
         header: "Criado em",
         cell: (c) => <ReactTableCellDate context={c} />,
-        meta: { className: "w-44 text-center" }
+        meta: { className: "w-48 text-center" }
       }),
       helper.display({
         id: "tags",
         header: "Tags",
         cell: (c) => <ShowLinksTableCellTags context={c} />,
+        meta: { className: "text-center" }
       }),
       helper.display({
         header: "Ações",

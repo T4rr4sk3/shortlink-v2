@@ -7,7 +7,7 @@ type UseLoadingReturn = {
   loading: boolean,
   offLoading: () => void,
   onLoading: () => void,
-  wrap: (callback: ((...args: any[]) => Promise<any>)) => (...args: unknown[]) => void
+  wrap: (callback: ((...args: any[]) => Promise<any>)) => (...args: unknown[]) => any
 }
 
 export function useLoading(initialState?: boolean): UseLoadingReturn {

@@ -24,7 +24,7 @@ export function ShowLinksTableCellName({ context, searchName }: TagCellProps<str
     return (
       <Link className="underline inline-flex items-center" href={url}>
         <GroupIcon className={iconClassName} />
-        {context.getValue()}
+        <p className="max-w-80 truncate"> {context.getValue()} </p>
       </Link>
     )
   }
@@ -33,7 +33,7 @@ export function ShowLinksTableCellName({ context, searchName }: TagCellProps<str
   return(
     <div className={cn("flex items-center", isExpired && "text-alert-red-main")}>
       <LinkIcon className={cn(iconClassName, isExpired && "text-alert-red-main")} />
-      {context.getValue()}
+      <p className="max-w-80 truncate"> {context.getValue()} </p>
     </div>
   )
 }
@@ -43,7 +43,7 @@ export function ShowLinksTableCellUrl({ context }: TagCellProps) {
   const expiresAt = context.row.original.linkInfo?.expiresAt
   const isExpired = !!expiresAt && verifyIfIsExpiredByExpiresAt(expiresAt)
   return(
-    <div className={isExpired ? "text-alert-red-main" : undefined}>
+    <div className={cn("whitespace-nowrap truncate",isExpired && "text-alert-red-main")}>
       {isLink ? context.row.original.linkInfo?.url : "-" }
     </div>
   )
@@ -106,7 +106,9 @@ export function ShowLinksTableCellTags({ context }: TagCellProps) {
                 color: getTextColorByHexcolorLuminosity(tag.color)
               }}
             >
-              {tag.name}
+              <Link href={"/show-links-by-tag?tag-id=" + tag.id}>
+                {tag.name}
+              </Link>
             </div>
           ))}
         </div>

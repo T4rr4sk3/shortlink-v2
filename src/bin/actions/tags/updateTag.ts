@@ -1,5 +1,4 @@
 "use server"
-
 import { revalidateTag } from "next/cache"
 
 import { tagGetLinkTags } from "@app/bin/endpoints/linkTag"

@@ -1,5 +1,5 @@
-import type { GetLinkGroupTreeInternalReturn} from "@app/types/api/linkGroupTree";
 import { type GetLinkGroupTreeGroupPathReturn, type GetLinkGroupTreeLinkPathReturn, type GetLinkGroupTreeReturn } from "@app/types/api/linkGroupTree"
+import type { GetLinkGroupTreeInternalReturn} from "@app/types/api/linkGroupTree";
 import { callInternalApi } from "../http/callInternalApi"
 import type { ApiCallError } from "@app/types/api"
 import { callApi } from "../http/callApi"

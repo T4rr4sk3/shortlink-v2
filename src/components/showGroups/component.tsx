@@ -13,7 +13,11 @@ import { toast } from "@app/hooks/use-toast"
 import LoadingIcon from "../icons/loading"
 import ShowGroupsTable from "./table"
 
-export default function ShowGroupsComponent({ groupNameParamName: searchName }: { groupNameParamName: string }) {
+interface Props {
+  /** @default "group-name" */
+  groupNameParamName: string | undefined
+}
+export default function ShowGroupsComponent({ groupNameParamName: searchName = "group-name" }: Props) {
   const { onLoading, offLoading, loading } = useLoading()
   const [groups, setGroups] = useState<GetGroupsReturn[]>([])
   const searchValue = useSearchParams().get(searchName) || undefined
@@ -37,7 +41,7 @@ export default function ShowGroupsComponent({ groupNameParamName: searchName }: 
     <div className="space-y-4">
       <form className="max-w-screen-md p-2 mx-auto">
         <div className="w-full border border-zinc-200 p-2 rounded-md inline-flex gap-2">
-          <input name="group-name" defaultValue={searchValue} className="px-2 py-1 w-full rounded-md bg-white text-sm ring-offset-white gap-4 placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" placeholder="Buscar grupo..." />
+          <input name={searchName} defaultValue={searchValue} className="px-2 py-1 w-full rounded-md bg-white text-sm ring-offset-white gap-4 placeholder:text-zinc-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-zinc-950 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" placeholder="Buscar grupo..." />
           <MainButton className="shrink-0" variant="primary-stroke"> Buscar </MainButton>
         </div>
       </form>

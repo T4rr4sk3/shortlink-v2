@@ -48,8 +48,11 @@ TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
         const currentValue = options.find((opt) => opt.value === fieldValue)?.label
         const inputPlaceholder = searchPlaceholder || "Search " + placeholder.toLocaleLowerCase()
         const emptyMessagePlaceholder = emptyMessage || "No " + placeholder.toLocaleLowerCase() + " found."
-        const onChangeValue = (value: string) => () => field.onChange((fieldValue === value) ? emptyValue : value)
         const iconClassName = (value: string) => cn("ml-auto", fieldValue === value ? "opacity-100" : "opacity-0")
+        const onChangeValue = (value: string) => () => {
+          const isToEmpty = fieldValue === value || String(emptyValue) === value
+          return field.onChange(isToEmpty ? emptyValue : value)
+        }
         return(
           <FormItem className="flex flex-col">
             {label && <FormLabel>{label}</FormLabel>}

@@ -8,12 +8,15 @@ import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api"
 import ShowLinksGroupsBreadcrumb from "./groupBreadcrumb"
 import ActionsProvider from "../provider/ActionsProvider"
 import { useLoading } from "@app/hooks/use-loading"
-import { MainButton } from "../common/mainButton"
+import ShowLinksSearchModal from "./searchModal"
 import { toast } from "@app/hooks/use-toast"
 import LoadingIcon from "../icons/loading"
 import ShowLinksTable from "./table"
-
-export default function ShowLinksComponent({ groupIdParamName: searchName }: { groupIdParamName: string }) {
+interface Props {
+  /** @default "group-id" */
+  groupIdParamName: string | undefined
+}
+export default function ShowLinksComponent({ groupIdParamName: searchName = "group-id" }: Props) {
   const [links, setLinks] = useState<GetLinkGroupTreeInternalReturn>()
   const { onLoading, offLoading, loading } = useLoading()
   const searchParams = useSearchParams()
@@ -46,9 +49,8 @@ export default function ShowLinksComponent({ groupIdParamName: searchName }: { g
           }
           {loading && <LoadingIcon className="size-8" />}
         </div>
-        <MainButton>
-          Buscar Link
-        </MainButton>
+
+        <ShowLinksSearchModal searchName={searchName} />
       </div>
 
       <ActionsProvider initialActions={actions}>

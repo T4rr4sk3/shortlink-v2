@@ -1,10 +1,9 @@
 "use server"
-
 import { revalidateTag } from "next/cache"
 
+import { tagGetLinkGroups } from "@app/bin/endpoints/linkGroup"
 import type { ApiCallError } from "@app/types/api"
 import { callApi } from "@app/bin/http/callApi"
-import { tagGetLinkGroups } from "@app/bin/endpoints/linkGroup"
 
 export async function doDeleteGroup(formData: FormData) {
   const groupId = formData.get("groupId")?.toString()

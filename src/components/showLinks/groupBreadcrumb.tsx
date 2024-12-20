@@ -3,6 +3,7 @@ import Link from "next/link"
 
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbSeparator } from "../ui/breadcrumb"
 import type { SimpleGroup } from "@app/types/api/group"
+import { linkGroupHref } from "@app/lib/link"
 
 interface Props {
   currentGroup?: SimpleGroup | null,
@@ -43,15 +44,11 @@ function BreadcrumbLinkGroup({ group, searchName }: LinkGroupProps) {
       <BreadcrumbSeparator className="[&>svg]:size-6" />
       <BreadcrumbItem key={group.id}>
         <BreadcrumbLink asChild>
-          <Link href={groupHref(group, searchName)}>
+          <Link href={linkGroupHref(group.id, searchName)}>
             {group.name}
           </Link>
         </BreadcrumbLink>
       </BreadcrumbItem>
     </Fragment>
   )
-}
-
-function groupHref(group: SimpleGroup, searchName: string) {
-  return `/show-links?${searchName}=${group.id}`
 }

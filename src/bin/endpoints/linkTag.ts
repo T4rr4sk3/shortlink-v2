@@ -1,7 +1,7 @@
 import type { GetTagByIdReturn, GetTagsReturn } from "@app/types/api/tag"
+import { callInternalApi } from "../http/callInternalApi"
 import type { ApiCallError } from "@app/types/api"
 import { callApi } from "../http/callApi"
-import { callInternalApi } from "../http/callInternalApi"
 
 export const tagGetLinkTags = "link-tags"
 

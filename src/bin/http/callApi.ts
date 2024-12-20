@@ -1,5 +1,4 @@
 "use server"
-
 import { apiUrl } from "@app/lib/api"
 import { getToken } from "./getToken"
 
