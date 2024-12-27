@@ -12,7 +12,7 @@ export default function CreateLinkFormTag({ tag, onRemove }: FormTagProps) {
   const textColor = luminosity > 0.6 ? "#000" : "#FFF"
   return(
     <div className="rounded-lg px-2 py-1 inline-flex items-center" style={{ backgroundColor: tag.color, color: textColor }}>
-      <span> {tag.name} {tag.links && `(${tag.links})`} </span>
+      <span> {tag.name} {tag.links ? `(${tag.links})` : ""} </span>
       {onRemove &&
         <CloseIcon
           className="size-5 ml-1 cursor-pointer"
