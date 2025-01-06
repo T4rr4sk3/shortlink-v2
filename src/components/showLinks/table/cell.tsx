@@ -13,6 +13,7 @@ import type { CustomCellProps } from "@app/types/props"
 import GroupIcon from "@app/components/icons/group"
 import CopyIcon from "@app/components/icons/copy"
 import LinkIcon from "@app/components/icons/link"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@app/components/ui/tooltip"
 
 type TagCellProps<T = unknown> = CustomCellProps<LinkOrGroup, T>
 
@@ -24,28 +25,46 @@ export function ShowLinksTableCellName({ context, searchName }: TagCellProps<str
     return (
       <Link className="underline inline-flex items-center" href={url}>
         <GroupIcon className={iconClassName} />
-        <p className="max-w-80 truncate"> {context.getValue()} </p>
+        <p className="max-3xl:max-w-40 truncate"> {context.getValue()} </p>
       </Link>
     )
   }
   const expiresAt = context.row.original.linkInfo?.expiresAt
   const isExpired = !!expiresAt && verifyIfIsExpiredByExpiresAt(expiresAt)
   return(
-    <div className={cn("flex items-center", isExpired && "text-alert-red-main")}>
-      <LinkIcon className={cn(iconClassName, isExpired && "text-alert-red-main")} />
-      <p className="max-w-80 truncate"> {context.getValue()} </p>
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div title={context.getValue()} className={cn("flex items-center", isExpired && "text-alert-red-main")}>
+            <LinkIcon className={cn(iconClassName, isExpired && "text-alert-red-main")} />
+            <p className="max-3xl:max-w-40 truncate"> {context.getValue()} </p>
+          </div>
+        </TooltipTrigger>
+        <TooltipContent sideOffset={4} className="max-w-96 break-all">
+          {context.getValue()}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
 
 export function ShowLinksTableCellUrl({ context }: TagCellProps) {
-  const isLink = context.row.original.type === "link"
+  const linkUrl = context.row.original.linkInfo?.url
   const expiresAt = context.row.original.linkInfo?.expiresAt
   const isExpired = !!expiresAt && verifyIfIsExpiredByExpiresAt(expiresAt)
   return(
-    <div className={cn("whitespace-nowrap truncate",isExpired && "text-alert-red-main")}>
-      {isLink ? context.row.original.linkInfo?.url : "-" }
-    </div>
+    <TooltipProvider>
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <div title={linkUrl} className={cn("whitespace-nowrap truncate max-3xl:max-w-96", isExpired && "text-alert-red-main")}>
+            {linkUrl || "-"}
+          </div>
+        </TooltipTrigger>
+        <TooltipContent sideOffset={4} className="max-w-96 break-all">
+          {linkUrl}
+        </TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
   )
 }
 

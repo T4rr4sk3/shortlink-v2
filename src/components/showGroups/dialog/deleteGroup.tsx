@@ -34,6 +34,10 @@ export default function ShowGroupsDeleteGroupDialog({ group }: { group: Pick<Get
           <AlertDialogDescription>
             Esta ação não pode ser desfeita. O
             grupo <b>{group.name}</b> será excluído para sempre.
+            <br/>
+            <em className="mt-2">
+              Todos os grupos e links filhos serão redirecionados para a raiz.
+            </em>
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
