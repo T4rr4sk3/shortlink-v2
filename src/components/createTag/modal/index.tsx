@@ -24,7 +24,7 @@ export default function CreateTagModal({ className, onClose, onDone }: CreateTag
     <Dialog onOpenChange={setOpen} open={isOpen}>
       <DialogTrigger asChild>
         <MainButton className={className}>
-          <AddTagIcon className="size-5 mr-2" /> Nova Tag
+          <AddTagIcon className="size-5 mr-2" aria-label="Criar tag" /> Nova Tag
         </MainButton>
       </DialogTrigger>
       <DialogContent onClose={handleClose}>

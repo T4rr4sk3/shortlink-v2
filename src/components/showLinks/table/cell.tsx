@@ -40,7 +40,7 @@ export function ShowLinksTableCellName({ context, searchName }: TagCellProps<str
             <p className="max-3xl:max-w-40 truncate"> {context.getValue()} </p>
           </div>
         </TooltipTrigger>
-        <TooltipContent sideOffset={4} className="max-w-96 break-all">
+        <TooltipContent sideOffset={4} className="max-w-96 break-all bg-slate-900 text-white border-none">
           {context.getValue()}
         </TooltipContent>
       </Tooltip>
@@ -60,7 +60,7 @@ export function ShowLinksTableCellUrl({ context }: TagCellProps) {
             {linkUrl || "-"}
           </div>
         </TooltipTrigger>
-        <TooltipContent sideOffset={4} className="max-w-96 break-all">
+        <TooltipContent sideOffset={4} className="max-w-96 break-all bg-slate-900 text-white border-none">
           {linkUrl}
         </TooltipContent>
       </Tooltip>
@@ -110,10 +110,10 @@ export function ShowLinksTableCellTags({ context }: TagCellProps) {
     <HoverCard>
       <HoverCardTrigger asChild>
         <MainButton variant="link" className="normal-case">
-          {linkInfo?.linkTags?.length} tags atribuídas
+          {linkInfo?.linkTags?.length} tag(s) atribuídas
         </MainButton>
       </HoverCardTrigger>
-      <HoverCardContent className="w-80 p-4">
+      <HoverCardContent className="max-w-80 w-fit p-4">
         <div className="w-full flex flex-wrap items-center justify-center gap-2">
           {!linkInfo?.linkTags.length && <span>Nenhuma tag atribuída.</span> }
           {linkInfo?.linkTags.map((tag) => (

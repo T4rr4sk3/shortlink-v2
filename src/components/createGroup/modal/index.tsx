@@ -24,7 +24,7 @@ export default function CreateGroupModal({ className, onClose, onDone }: CreateG
     <Dialog onOpenChange={setOpen} open={isOpen}>
       <DialogTrigger asChild>
         <MainButton className={className}>
-          <AddGroupIcon className="size-5 mr-2" /> Novo Grupo
+          <AddGroupIcon className="size-5 mr-2" aria-label="Criar grupo" /> Novo Grupo
         </MainButton>
       </DialogTrigger>
       <DialogContent onClose={handleClose}>

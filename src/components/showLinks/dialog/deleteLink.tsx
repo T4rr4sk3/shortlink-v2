@@ -21,11 +21,13 @@ export default function ShowLinksDeleteLinkDialog({ link }: { link: Pick<SimpleL
       callAction("searchLinks")
     }
   }
+  const label = `Deletar link ${link.name}`
   return(
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <MainButton variant="icon" size="icon">
+        <MainButton variant="icon" size="icon" aria-label={label} title={label}>
           <DeleteIcon className="size-5" />
+          <span className="sr-only">{label}</span>
         </MainButton>
       </AlertDialogTrigger>
       <AlertDialogContent>

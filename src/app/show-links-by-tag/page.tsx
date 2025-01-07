@@ -23,7 +23,7 @@ export default async function ShowLinksPage({ searchParams }: WithSearchParams<P
   return(
     <MainWrapperWithNav>
       <div className="w-full space-y-4 text-center">
-        <h1 className="text-2xl font-semibold"> {isError? "Erro:" : "Tag"} &quot;{tagName}&quot; </h1>
+        <h1 className="text-2xl font-semibold"> {isError? "Erro:" : "Tag:"} {tagName} </h1>
 
         <ShowLinksByTagComponent tagIdParamName="tag-id" />
       </div>

@@ -17,11 +17,13 @@ export default function ShowLinksEditLinkDialog({ link }: { link: LinkToEdit }) 
     callAction("searchLinks")
   }
   const expires = link.expiresAt ? new Date(link.expiresAt).toISOString().substring(0,10) : null
+  const label = `Editar link ${link.name}`
   return(
     <Dialog onOpenChange={setOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <MainButton variant="icon" size="icon">
+        <MainButton variant="icon" size="icon" aria-label={label} title={label}>
           <EditIcon className="size-5" />
+          <span className="sr-only">{label}</span>
         </MainButton>
       </DialogTrigger>
       <DialogContent>

@@ -38,8 +38,14 @@ export default function ShowLinksTable({ links, searchName }: Props) {
         meta: { className: "w-24" }
       }),
       helper.accessor("linkInfo", {
-        header: "Visitas",
+        header: (c) => <ReactTableHeadBase context={c} title="Visitas" />,
         cell: (c) => <>{c.getValue()?.visits}</>,
+        sortingFn: (a, b) => {
+          const aVisits = a.original.linkInfo?.visits || 0
+          const bVisits = b.original.linkInfo?.visits || 0
+          return aVisits - bVisits
+        },
+        sortUndefined: "last",
         meta: { className: "w-32" }
       }),
       helper.accessor("linkInfo.code", {
@@ -48,9 +54,10 @@ export default function ShowLinksTable({ links, searchName }: Props) {
         meta: { className: "w-36" }
       }),
       helper.accessor("createdAt", {
-        header: "Criado em",
+        header: (c) => <ReactTableHeadBase context={c} title="Criado em" />,
         cell: (c) => <ReactTableCellDate context={c} />,
-        meta: { className: "w-48 text-center" }
+        sortingFn: (a, b) => new Date(a.original.createdAt).getTime() - new Date(b.original.createdAt).getTime(),
+        meta: { className: "w-52 text-center" }
       }),
       helper.display({
         id: "tags",

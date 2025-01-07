@@ -15,11 +15,13 @@ export default function ShowTagsEditTagDialog({ tag }: { tag: Pick<GetTagsReturn
     setOpen(false)
     callAction("searchTags")
   }
+  const label = `Editar tag ${tag.name}`
   return(
     <Dialog onOpenChange={setOpen} open={isOpen}>
       <DialogTrigger asChild>
-        <MainButton variant="icon" size="icon">
+        <MainButton variant="icon" size="icon" aria-label={label} title={label}>
           <EditIcon className="size-5" />
+          <span className="sr-only">{label}</span>
         </MainButton>
       </DialogTrigger>
       <DialogContent onClose={handleClose}>

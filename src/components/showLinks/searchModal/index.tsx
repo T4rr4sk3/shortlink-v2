@@ -18,7 +18,7 @@ export default function ShowLinksSearchModal({ className, searchName }: ShowLink
     <Dialog onOpenChange={setOpen} open={isOpen}>
       <DialogTrigger asChild>
         <MainButton className={className}>
-          <SearchWebIcon className="size-6 mr-2" /> Buscar Link
+          <SearchWebIcon className="size-6 mr-2" aria-label="Buscar link" /> Buscar Link
         </MainButton>
       </DialogTrigger>
       <DialogContent>
