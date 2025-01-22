@@ -6,6 +6,8 @@ import { ReactTableCellBase, ReactTableCellDate } from "@app/components/tables/R
 import { ReactTableHeadBase } from "@app/components/tables/ReactTableHeads"
 import ReactTablePaginator from "@app/components/tables/ReactTablePaginator"
 import type { LinkOrGroup } from "@app/types/api/linkGroupTree"
+import { useSearchParams } from "next/navigation"
+import { useEffect } from "react"
 
 const helper = createColumnHelper<LinkOrGroup>()
 
@@ -14,6 +16,7 @@ interface Props {
   searchName: string,
 }
 export default function ShowLinksTable({ links, searchName }: Props) {
+  const searchParams = useSearchParams()
   const table = useReactTable({
     data: links,
     columns: [
@@ -77,6 +80,13 @@ export default function ShowLinksTable({ links, searchName }: Props) {
     initialState: { pagination: { pageSize: 5 } },
     autoResetPageIndex: false,
   })
+
+  const groupId = searchParams.get(searchName)
+
+  useEffect(() => {
+    setTimeout(() => table.resetPageIndex(), 500)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [groupId, table])
   return(
     <div className="w-full">
       <ReactTable table={table}>

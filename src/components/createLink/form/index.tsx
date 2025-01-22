@@ -59,7 +59,7 @@ export default function CreateLinkForm() {
     const tagIncluded = fieldTags.find((t) => t.id === tag.id)
     if(tagIncluded) {
       const message = `Tag '${tagIncluded.name}' já incluída.`
-      toast({ description: message, variant: "destructive", duration: 4000 })
+      toast({ description: message, duration: 4000 })
       return
     }
     if(fieldTags.length < 5) append(tag)
