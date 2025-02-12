@@ -4,12 +4,11 @@ import { useSearchParams } from "next/navigation"
 
 import type { GetLinkGroupTreeInternalReturn } from "@app/types/api/linkGroupTree"
 import { getLinkGroupTreeClient } from "@app/bin/endpoints/linkGroupTree"
-import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api"
 import ShowLinksGroupsBreadcrumb from "./groupBreadcrumb"
 import ActionsProvider from "../provider/ActionsProvider"
 import { useLoading } from "@app/hooks/use-loading"
 import ShowLinksSearchModal from "./searchModal"
-import { toast } from "@app/hooks/use-toast"
+import { apiRejectHandler } from "@app/lib/api"
 import LoadingIcon from "../icons/loading"
 import ShowLinksTable from "./table"
 interface Props {
@@ -24,12 +23,12 @@ export default function ShowLinksComponent({ groupIdParamName: searchName = "gro
 
   const searchLinksAndGroups = useCallback(async () => {
     onLoading()
-    const data = await getLinkGroupTreeClient(searchValue)
-    if(dataIsApiCallError(data)) {
-      const message = getApiCallErrorMessage(data, "Buscar links")
-      toast({ description: message, variant: "error" })
-    } else setLinks(data)
-    offLoading()
+    return getLinkGroupTreeClient(searchValue).then(setLinks)
+      .catch((reason) => {
+        apiRejectHandler("Buscar links")(reason)
+        setLinks({ groupsPath: [], linksOrGroups: [], parentGroup: null, path: "/" })
+      })
+      .finally(offLoading)
   }, [offLoading, onLoading, searchValue])
   useEffect(() => { searchLinksAndGroups() }, [searchLinksAndGroups])
     const actions = useMemo(() => {

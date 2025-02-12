@@ -2,14 +2,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
-import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api"
 import type { LinkOrGroup } from "@app/types/api/linkGroupTree"
 import ActionsProvider from "../provider/ActionsProvider"
 import { getLinksClient } from "@app/bin/endpoints/link"
 import type { GetLinkReturn } from "@app/types/api/link"
 import { useLoading } from "@app/hooks/use-loading"
+import { apiRejectHandler } from "@app/lib/api"
 import ShowLinksTable from "../showLinks/table"
-import { toast } from "@app/hooks/use-toast"
 import LoadingIcon from "../icons/loading"
 
 export default function ShowLinksByTagComponent({ tagIdParamName: searchName }: { tagIdParamName: string }) {
@@ -20,12 +19,12 @@ export default function ShowLinksByTagComponent({ tagIdParamName: searchName }: 
 
   const searchLinksAndGroups = useCallback(async () => {
     onLoading()
-    const data = await getLinksClient({ tag: searchValue })
-    if(dataIsApiCallError(data)) {
-      const message = getApiCallErrorMessage(data, "Buscar links")
-      toast({ description: message, variant: "error" })
-    } else setLinks(data)
-    offLoading()
+    return getLinksClient({ tag: searchValue }).then(setLinks)
+      .catch((reason) => {
+        apiRejectHandler("Buscar links")(reason)
+        setLinks([])
+      })
+      .finally(offLoading)
   }, [offLoading, onLoading, searchValue])
   useEffect(() => { searchLinksAndGroups() }, [searchLinksAndGroups])
     const actions = useMemo(() => {

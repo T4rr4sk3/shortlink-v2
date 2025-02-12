@@ -2,14 +2,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
-import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api"
 import { getLinkTagsClient } from "@app/bin/endpoints/linkTag"
 import ActionsProvider from "../provider/ActionsProvider"
 import type { GetTagsReturn } from "@app/types/api/tag"
 import { useLoading } from "@app/hooks/use-loading"
 import { MainButton } from "../common/mainButton"
 import CreateTagModal from "../createTag/modal"
-import { toast } from "@app/hooks/use-toast"
+import { apiRejectHandler } from "@app/lib/api"
 import LoadingIcon from "../icons/loading"
 import ShowTagsTable from "./table"
 
@@ -25,12 +24,9 @@ export default function ShowTagsComponent({ tagNameParamName: searchName = "tag-
 
   const searchTags = useCallback(async () => {
     onLoading()
-    const data = await getLinkTagsClient(searchValue)
-    if(dataIsApiCallError(data)) {
-      const message = getApiCallErrorMessage(data, "Buscar tags")
-      toast({ description: message, variant: "error" })
-    } else setTags(data)
-    offLoading()
+    return getLinkTagsClient(searchValue).then(setTags)
+      .catch(apiRejectHandler("Buscar tags"))
+      .finally(offLoading)
   }, [onLoading, offLoading, searchValue])
 
   useEffect(() => { searchTags() }, [searchTags])

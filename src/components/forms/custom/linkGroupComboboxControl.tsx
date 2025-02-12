@@ -1,12 +1,11 @@
 "use client"
 import { useEffect, useState, type ComponentProps } from "react";
 
-import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api";
 import ComboboxControl from "@app/components/forms/comboboxControl";
 import { getLinkGroupsClient } from "@app/bin/endpoints/linkGroup";
 import type { GetGroupsReturn } from "@app/types/api/group";
 import { useLoading } from "@app/hooks/use-loading";
-import { toast } from "@app/hooks/use-toast";
+import { apiRejectHandler } from "@app/lib/api";
 
 type LinkGroupComboProps = Omit<ComponentProps<typeof ComboboxControl>, "options" | "placeholder">
 export default function LinkGroupComboboxControl(props: LinkGroupComboProps) {
@@ -15,12 +14,8 @@ export default function LinkGroupComboboxControl(props: LinkGroupComboProps) {
 
   useEffect(() => {
     onLoading()
-    getLinkGroupsClient().then((data) => {
-      if(dataIsApiCallError(data)) {
-        const message = getApiCallErrorMessage(data, "Buscar grupos")
-        toast({ description: message, variant: "error" })
-      } else setGroups(data)
-    })
+    getLinkGroupsClient().then(setGroups)
+    .catch(apiRejectHandler())
     .finally(offLoading)
   }, [offLoading, onLoading])
 

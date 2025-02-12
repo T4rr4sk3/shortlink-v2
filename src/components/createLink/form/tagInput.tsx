@@ -4,13 +4,12 @@ import { Check } from "lucide-react";
 
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@app/components/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@app/components/ui/popover";
-import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api";
 import { getLinkTagsClient } from "@app/bin/endpoints/linkTag";
 import { MainButton } from "@app/components/common/mainButton";
 import type { GetTagsReturn } from "@app/types/api/tag";
 import { useLoading } from "@app/hooks/use-loading";
 import { Button } from "@app/components/ui/button";
-import { toast } from "@app/hooks/use-toast";
+import { apiRejectHandler } from "@app/lib/api";
 
 interface TagInputProps {
   onIncludeTag: (tag: GetTagsReturn) => void,
@@ -24,12 +23,9 @@ export default function CreateLinkFormTagInput({ onIncludeTag, disabled }: TagIn
 
   const searchTags = useCallback(async (name?: string) => {
     onLoading()
-    const data = await getLinkTagsClient(name)
-    if(dataIsApiCallError(data)) {
-      const message = getApiCallErrorMessage(data, "Buscar tags")
-      toast({ description: message, variant: "error" })
-    } else setTags(data)
-    offLoading()
+    return getLinkTagsClient(name).then(setTags)
+      .catch(apiRejectHandler("Buscar tags"))
+      .finally(offLoading)
   }, [onLoading, offLoading])
 
   useEffect(() => { searchTags() }, [searchTags])
@@ -89,7 +85,7 @@ export default function CreateLinkFormTagInput({ onIncludeTag, disabled }: TagIn
       <MainButton
         className="shrink-0"
         type="button"
-        disabled={disabled}
+        disabled={disabled || !currentTag}
         loading={loading}
         loadingText="..."
         onClick={handleClick}

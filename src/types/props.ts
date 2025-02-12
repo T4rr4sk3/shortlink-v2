@@ -32,3 +32,10 @@ export interface PaginatorProps {
   showLines?: boolean,
   linesLabel?: string | ((rows: number) => string)
 }
+
+type NextError = Error & { digest?: string }
+
+export interface ErrorPageProps {
+  error: NextError,
+  reset: () => void,
+}

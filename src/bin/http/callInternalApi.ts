@@ -1,5 +1,5 @@
 "use client"
-import { toJSON } from "@app/lib/api"
+import { dataIsApiCallError, toJSON } from "@app/lib/api"
 
 /** used to call this website API */
 export async function callInternalApi<ReturnData = unknown>(path: string, options?: ApiOptions) {
@@ -21,9 +21,11 @@ export async function callInternalApi<ReturnData = unknown>(path: string, option
   .then(async (response) => {
     try {
       const data = await response.json()
+      if(dataIsApiCallError(data)) return Promise.reject(data)
       return { status: response.status, data }
     } catch (error) {
-      const data = await response.text()
+      const data = await (response.bodyUsed ? undefined : response.text())
+
       return { status: 500, data: toJSON({ error, data }) }
     }
   })

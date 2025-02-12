@@ -1,13 +1,12 @@
 import { useState, type ChangeEventHandler } from "react"
 
-import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api"
 import { SearchInput } from "@app/components/forms/searchInput"
 import { MainButton } from "@app/components/common/mainButton"
 import type { GetLinkReturn } from "@app/types/api/link"
 import { getLinksClient } from "@app/bin/endpoints/link"
 import { useLoading } from "@app/hooks/use-loading"
 import ShowLinksSearchModalResult from "./result"
-import { toast } from "@app/hooks/use-toast"
+import { apiRejectHandler } from "@app/lib/api"
 
 interface Props { searchName: string }
 export default function ShowLinksSearchModalContent({ searchName }: Props) {
@@ -21,11 +20,8 @@ export default function ShowLinksSearchModalContent({ searchName }: Props) {
 
   async function searchLinks(e: Event) {
     e.preventDefault()
-    const data = await getLinksClient({ name: searchValue })
-    if(dataIsApiCallError(data)) {
-      const message = getApiCallErrorMessage(data, "Buscar links")
-      toast({ description: message, variant: "error" })
-    } else setLinks(data)
+    return getLinksClient({ name: searchValue }).then(setLinks)
+      .catch(apiRejectHandler("Buscar links"))
   }
 
   return(

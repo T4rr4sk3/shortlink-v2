@@ -2,14 +2,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
-import { dataIsApiCallError, getApiCallErrorMessage } from "@app/lib/api"
 import { getLinkGroupsClient } from "@app/bin/endpoints/linkGroup"
 import type { GetGroupsReturn } from "@app/types/api/group"
 import ActionsProvider from "../provider/ActionsProvider"
-import CreateGroupModal from "../createGroup/modal"
 import { useLoading } from "@app/hooks/use-loading"
+import CreateGroupModal from "../createGroup/modal"
 import { MainButton } from "../common/mainButton"
-import { toast } from "@app/hooks/use-toast"
+import { apiRejectHandler } from "@app/lib/api"
 import LoadingIcon from "../icons/loading"
 import ShowGroupsTable from "./table"
 
@@ -24,12 +23,10 @@ export default function ShowGroupsComponent({ groupNameParamName: searchName = "
 
   const searchGroups = useCallback(async () => {
     onLoading()
-    const data = await getLinkGroupsClient(searchValue)
-    if(dataIsApiCallError(data)) {
-      const message = getApiCallErrorMessage(data, "Buscar grupos")
-      toast({ description: message, variant: "error" })
-    } else setGroups(data)
-    offLoading()
+    return getLinkGroupsClient(searchValue)
+      .then(setGroups)
+      .catch(apiRejectHandler("Buscar grupos"))
+      .finally(offLoading)
   }, [onLoading, offLoading, searchValue])
 
   useEffect(() => { searchGroups() }, [searchGroups])
